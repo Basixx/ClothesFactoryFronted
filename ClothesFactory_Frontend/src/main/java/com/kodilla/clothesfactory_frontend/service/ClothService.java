@@ -5,8 +5,6 @@ import com.kodilla.clothesfactory_frontend.form.auxiliary.ClothColor;
 import com.kodilla.clothesfactory_frontend.form.auxiliary.ClothFashion;
 import com.kodilla.clothesfactory_frontend.form.auxiliary.ClothFont;
 import com.kodilla.clothesfactory_frontend.form.auxiliary.ClothSize;
-
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +27,6 @@ public class ClothService {
 
     public List<Cloth> getClothes() {
         return new ArrayList<>(clothes);
-    }
-
-    public void addCloth(Cloth cloth) {
-        this.clothes.add(cloth);
     }
 
     private List<Cloth> exampleData(){

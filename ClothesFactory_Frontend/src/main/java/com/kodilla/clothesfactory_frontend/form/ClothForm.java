@@ -1,9 +1,10 @@
 package com.kodilla.clothesfactory_frontend.form;
 
-import com.kodilla.clothesfactory_frontend.MainView;
+
 import com.kodilla.clothesfactory_frontend.domain.Cloth;
 import com.kodilla.clothesfactory_frontend.form.auxiliary.*;
 import com.kodilla.clothesfactory_frontend.service.ClothService;
+import com.kodilla.clothesfactory_frontend.views.MainView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -12,7 +13,6 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class ClothForm extends FormLayout {
     private Button save = new Button("Save");
     private Button delete = new Button("Delete");
     private Binder<Cloth> binder = new Binder<>(Cloth.class);
-    private MainView mainView;
+    private AccountForm accountForm;
     private ClothService service = ClothService.getInstance();
     private void setQuantityComboBox () {
         List<Integer> optionsList = new ArrayList<>();
@@ -38,8 +38,8 @@ public class ClothForm extends FormLayout {
     }
 
 
-    public ClothForm(MainView mainView) {
-        this.mainView = mainView;
+    public ClothForm(AccountForm accountForm) {
+        this.accountForm = accountForm;
         fashion.setItems(ClothFashion.values());
         color.setItems(ClothColor.values());
         font.setItems(ClothFont.values());
@@ -60,14 +60,14 @@ public class ClothForm extends FormLayout {
         //dołączyć metodę liczenia ceny
         //cloth.setPrice(new BigDecimal(50));
         service.save(cloth);
-        mainView.refreshClothes();
+        accountForm.refreshClothes();
         setCloth(null);
     }
 
     private void delete() {
         Cloth cloth = binder.getBean();
         service.delete(cloth);
-        mainView.refreshClothes();
+        accountForm.refreshClothes();
         setCloth(null);
     }
 

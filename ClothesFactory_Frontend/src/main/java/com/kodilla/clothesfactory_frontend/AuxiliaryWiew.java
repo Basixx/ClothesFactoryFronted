@@ -2,22 +2,23 @@ package com.kodilla.clothesfactory_frontend;
 
 import com.kodilla.clothesfactory_frontend.domain.Cloth;
 import com.kodilla.clothesfactory_frontend.domain.Order;
+import com.kodilla.clothesfactory_frontend.form.AccountForm;
 import com.kodilla.clothesfactory_frontend.form.ClothForm;
+import com.kodilla.clothesfactory_frontend.form.LoginForm;
 import com.kodilla.clothesfactory_frontend.service.ClothService;
 import com.kodilla.clothesfactory_frontend.service.OrderService;
+import com.kodilla.clothesfactory_frontend.views.MainView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.Route;
 
-@Route
-public class MainView extends VerticalLayout {
+public class AuxiliaryWiew extends VerticalLayout {
     private OrderService orderService = OrderService.getInstance();
     private ClothService clothService = ClothService.getInstance();
     private Grid<Order> orderGrid = new Grid<>(Order.class);
     private Grid<Cloth> clothGrid = new Grid<>(Cloth.class);
-    private ClothForm clothForm = new ClothForm(this);
+    private ClothForm clothForm = new ClothForm(new AccountForm(new MainView())); //tu zmienione
 
     private Button clothes = new Button("Show Clothes", e -> showClothes());
     private Button orders = new Button("Show Orders", e -> showOrders());
@@ -25,7 +26,7 @@ public class MainView extends VerticalLayout {
 
     HorizontalLayout toolbar = new HorizontalLayout(clothes, orders);
 
-    public MainView() {
+    public AuxiliaryWiew() {
         add(toolbar);
         clothForm.setCloth(null);
     }
