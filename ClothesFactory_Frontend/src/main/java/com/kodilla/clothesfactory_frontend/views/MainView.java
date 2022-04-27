@@ -2,7 +2,7 @@ package com.kodilla.clothesfactory_frontend.views;
 
 import com.kodilla.clothesfactory_frontend.form.AdminForm;
 import com.kodilla.clothesfactory_frontend.form.LoginForm;
-import com.kodilla.clothesfactory_frontend.form.UserForm;
+import com.kodilla.clothesfactory_frontend.form.CreateUserForm;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -16,7 +16,7 @@ public class MainView  extends VerticalLayout {
     private Button admin = new Button("Admin", event -> showAdminForm());
 
     private LoginForm loginForm = new LoginForm(this);
-    private UserForm userForm = new UserForm(this);
+    private CreateUserForm createUserForm = new CreateUserForm(this);
     private AdminForm adminForm = new AdminForm(this);
     HorizontalLayout menu = new HorizontalLayout(login, signIn, admin);
 
@@ -26,7 +26,7 @@ public class MainView  extends VerticalLayout {
 
     private void showSignInForm() {
         prepareView();
-        add(userForm);
+        add(createUserForm);
     }
 
     private void showLoginForm() {

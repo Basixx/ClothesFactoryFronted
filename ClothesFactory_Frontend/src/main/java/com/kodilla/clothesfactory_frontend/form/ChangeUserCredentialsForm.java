@@ -8,9 +8,13 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import jdk.tools.jmod.Main;
 
-public class UserForm extends FormLayout {
-    private MainView mainView;
+import javax.swing.*;
+
+public class ChangeUserCredentialsForm extends FormLayout {
+    private AccountForm accountForm;
+    MainView mainView;
     private TextField name = new TextField("Name");
     private TextField surname = new TextField("Surname");
     private TextField phoneNumber = new TextField("Phone Number");
@@ -18,25 +22,27 @@ public class UserForm extends FormLayout {
     private TextField password = new TextField("Password");
     private UserService userService = UserService.getInstance();
     private Binder<User> binder = new Binder<>(User.class);
-    private Button createAccount = new Button(
-            "Create Account", event -> {
-                showAccountForm();
-            });
-    private AccountForm accountForm = new AccountForm(mainView);
+    private Button updateAccount = new Button("Update Credentials");
 
+    private Button deleteAccount = new Button("Delete Account", event -> delete());
 
-    public UserForm(MainView mainView) {
-        this.mainView = mainView;
-        add(name, surname, phoneNumber, emailAddress, password, createAccount);
-
+    public ChangeUserCredentialsForm(AccountForm accountForm) {
+        this.accountForm = accountForm;
+        add(name, surname, phoneNumber, emailAddress, password, updateAccount, deleteAccount);
+        binder.bindInstanceFields(this);
     }
 
     private void save() {
         User user = binder.getBean();
-        userService.save(user);
+        userService.save(user); //tu zmienić na update user
         setUser(null);
     }
 
+    private void delete() {
+        User user = binder.getBean();
+        //userService.delete(user);
+        setUser(null);
+    }
     public void setUser(User user) {
         binder.setBean(user);
 
@@ -45,10 +51,5 @@ public class UserForm extends FormLayout {
         } else {
             setVisible(true);
         }
-    }
-
-    private void showAccountForm() {
-        removeAll();
-        add(accountForm);
     }
 }

@@ -29,6 +29,7 @@ public class AccountForm extends FormLayout {
     private Grid<Order> orderGrid = new Grid<>(Order.class);
     private Grid<User> userGrid = new Grid<>(User.class);
     private ClothForm clothForm = new ClothForm(this);
+    private ChangeUserCredentialsForm changeUserCredentialsForm = new ChangeUserCredentialsForm(this);
 
     HorizontalLayout toolbar = new HorizontalLayout(createNewOrder, myOrders, accountSettings);
     VerticalLayout view = new VerticalLayout(new Text("ACCOUNT"), toolbar);
@@ -66,16 +67,21 @@ public class AccountForm extends FormLayout {
         orderGrid.setColumns("orderDate", "totalOrderPrice");
         add(orderGrid);
         refreshOrders();
+        orderGrid.asSingleSelect().addValueChangeListener(event -> {
+            clothGrid.setItems(clothService.getClothes());  //tutaj dać by ORDER
+            add(clothGrid);
+        });
     }
 
     private void showAccountSettings() {
+        changeUserCredentialsForm.setUser(null);
         showAccountView();
-        userGrid.setColumns("name", "surname", "phoneNumber", "emailAddress");
-        add(userGrid);
+        userGrid.setColumns("name", "surname", "phoneNumber", "emailAddress", "password");
+        VerticalLayout accountLayout = new VerticalLayout(userGrid, changeUserCredentialsForm);
+        add(accountLayout);
+        setSizeFull();;
         refreshUser();
-//        VerticalLayout accountLayout = new VerticalLayout(userGrid, loginForm);
-//        add(accountLayout);
-//        refreshUser();
+        userGrid.asSingleSelect().addValueChangeListener(event -> changeUserCredentialsForm.setUser(userGrid.asSingleSelect().getValue()));
     }
 
     public void refreshClothes() {
