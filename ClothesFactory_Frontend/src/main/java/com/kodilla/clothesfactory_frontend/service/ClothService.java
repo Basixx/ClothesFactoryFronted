@@ -1,5 +1,6 @@
 package com.kodilla.clothesfactory_frontend.service;
 
+import com.kodilla.clothesfactory_frontend.configuration.client.BackendClient;
 import com.kodilla.clothesfactory_frontend.domain.Cloth;
 import com.kodilla.clothesfactory_frontend.form.auxiliary.ClothColor;
 import com.kodilla.clothesfactory_frontend.form.auxiliary.ClothFashion;
@@ -12,10 +13,12 @@ public class ClothService {
     private List<Cloth> clothes;
 
     private static ClothService clothService;
+    private BackendClient backendClient;
 
     private ClothService(List<Cloth> clothes) {
 //        this.clothes = clothes;
         this.clothes = exampleData();
+//        this.clothes = fromBackend();
     }
 
     public static ClothService getInstance() {
@@ -29,11 +32,15 @@ public class ClothService {
         return new ArrayList<>(clothes);
     }
 
-    private List<Cloth> exampleData(){
+    private List<Cloth> exampleData() {
         List<Cloth> clothes = new ArrayList<>();
         clothes.add(new Cloth(
                 ClothFashion.T_SHIRT, ClothColor.RED, "hello", ClothFont.COMIC_SANS, ClothColor.WHITE, ClothSize.L, 3));
         return clothes;
+    }
+
+    private List<Cloth> fromBackend() {
+        return backendClient.getAllClothes();
     }
 
     public void save(Cloth cloth) {
