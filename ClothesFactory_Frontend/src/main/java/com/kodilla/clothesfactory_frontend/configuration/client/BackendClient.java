@@ -9,6 +9,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +31,9 @@ public class BackendClient {
                     "http://localhost:8080/v1/clothes",
                     Cloth[].class
             );
-            return Arrays.asList(ofNullable(clothesResponse).orElse(new Cloth[0]));
+            return Optional.ofNullable(clothesResponse)
+                    .map(Arrays::asList)
+                    .orElse(Collections.emptyList());
 
         } catch (RestClientException e) {
             LOGGER.error(e.getMessage(), e);

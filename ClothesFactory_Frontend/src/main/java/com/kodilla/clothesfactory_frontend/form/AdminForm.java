@@ -47,7 +47,7 @@ public class AdminForm extends FormLayout {
 
     private void showClothes() {
         showAdminView();
-        clothGrid.setColumns("fashion", "color", "print", "font", "printColor", "size", "quantity");
+        clothGrid.setColumns("fashion", "color", "print", "font", "printColor", "size", "quantity", "price");
         add(clothGrid);
         clothGrid.setItems(clothService.getClothes());
     }

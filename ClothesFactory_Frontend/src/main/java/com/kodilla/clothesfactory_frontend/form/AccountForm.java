@@ -48,7 +48,7 @@ public class AccountForm extends FormLayout {
         clothForm.setCloth(null);
         showAccountView();
 
-        clothGrid.setColumns("fashion", "color", "print", "font", "printColor", "size", "quantity");
+        clothGrid.setColumns("fashion", "color", "print", "font", "printColor", "size", "quantity", "price");
         addNewCloth.addClickListener(e -> {
             clothGrid.asSingleSelect().clear();
             clothForm.setCloth(new Cloth());
