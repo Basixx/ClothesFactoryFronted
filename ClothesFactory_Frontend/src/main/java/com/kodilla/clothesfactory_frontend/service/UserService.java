@@ -1,18 +1,19 @@
 package com.kodilla.clothesfactory_frontend.service;
 
+import com.kodilla.clothesfactory_frontend.configuration.client.UserClient;
 import com.kodilla.clothesfactory_frontend.domain.User;
 import java.util.List;
-import java.awt.*;
 import java.util.ArrayList;
 
 public class UserService {
 
     private List<User> users;
     private static UserService userService;
+    private UserClient userClient = UserClient.getInstance();
 
     private UserService(List<User> users) {
-//        this.users = users;
-        this.users = exampleData();
+        this.users = users;
+//        this.users = exampleData();
     }
 
     public static UserService getInstance() {
@@ -31,6 +32,10 @@ public class UserService {
         List<User> users = new ArrayList<>();
         users.add(new User("John", "Smith", "111111", "john@smith.com", "password"));
         return users;
+    }
+
+    public List<User> getAllUsers() {
+        return userClient.getAllUsers();
     }
 
     public void save(User user) {

@@ -49,20 +49,20 @@ public class AdminForm extends FormLayout {
         showAdminView();
         clothGrid.setColumns("fashion", "color", "print", "font", "printColor", "size", "quantity", "price");
         add(clothGrid);
-        clothGrid.setItems(clothService.getClothes());
+        clothGrid.setItems(clothService.getAllClothes());
     }
 
     private void showOrders() {
         showAdminView();
-        orderGrid.setColumns("orderDate", "totalOrderPrice");
+        orderGrid.setColumns("orderDate", "totalOrderPrice", "paid", "sent");
         add(orderGrid);
-        orderGrid.setItems(orderService.getOrders());
+        orderGrid.setItems(orderService.getAllOrders());
     }
 
     private void showUsers() {
         showAdminView();
         userGrid.setColumns("name", "surname", "phoneNumber", "emailAddress");
         add(userGrid);
-        userGrid.setItems(userService.getUsers());
+        userGrid.setItems(userService.getAllUsers());
     }
 }

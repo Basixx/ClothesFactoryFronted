@@ -1,6 +1,6 @@
 package com.kodilla.clothesfactory_frontend.service;
 
-import com.kodilla.clothesfactory_frontend.configuration.client.BackendClient;
+import com.kodilla.clothesfactory_frontend.configuration.client.ClothesClient;
 import com.kodilla.clothesfactory_frontend.domain.Cloth;
 import com.kodilla.clothesfactory_frontend.form.auxiliary.ClothColor;
 import com.kodilla.clothesfactory_frontend.form.auxiliary.ClothFashion;
@@ -15,11 +15,11 @@ public class ClothService {
     private List<Cloth> clothes;
 
     private static ClothService clothService;
-    private BackendClient backendClient;
+    private ClothesClient clothesClient = ClothesClient.getInstance();
 
     private ClothService(List<Cloth> clothes) {
-//        this.clothes = clothes;
-        this.clothes = exampleData();
+        this.clothes = clothes;
+//        this.clothes = exampleData();
 //        this.clothes = fromBackend();
     }
 
@@ -37,16 +37,27 @@ public class ClothService {
     private List<Cloth> exampleData() {
         List<Cloth> clothes = new ArrayList<>();
         clothes.add(new Cloth(
-                ClothFashion.T_SHIRT, ClothColor.RED, "hello", ClothFont.COMIC_SANS, ClothColor.WHITE, ClothSize.L, 3, new BigDecimal(50)));
+                1L, ClothFashion.T_SHIRT, ClothColor.RED, "hello", ClothFont.COMIC_SANS, ClothColor.WHITE, ClothSize.L, 3, new BigDecimal(50)));
         return clothes;
     }
 
-    public List<Cloth> fromBackend() {
-        return backendClient.getAllClothes();
+    public List<Cloth> getAllClothes() {
+        return clothesClient.getAllClothes();
+    }
+
+    public List<Cloth> getClothesFromUserCart(int userId) {
+        return clothesClient.getClothesFromUserCart(userId);
+    }
+
+    public List<Cloth> getClothesFromOrder(int orderId) {
+        return clothesClient.getClothesFromOrder(orderId);
     }
 
     public void save(Cloth cloth) {
-        this.clothes.add(cloth);
+        clothesClient.createCloth(cloth);
+    }
+    public void update(int clothId, Cloth cloth) {
+        clothesClient.updateCloth(clothId, cloth);
     }
 
     public void delete(Cloth cloth) {

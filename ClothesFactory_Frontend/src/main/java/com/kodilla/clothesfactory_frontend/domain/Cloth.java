@@ -18,6 +18,9 @@ import java.math.BigDecimal;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Cloth {
 
+    @JsonProperty("id")
+    private Long id;
+
     @JsonProperty("fashion")
     private ClothFashion fashion;
 
