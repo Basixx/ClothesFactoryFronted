@@ -22,11 +22,13 @@ public class MainView  extends VerticalLayout {
 
     public MainView() {
         prepareView();
+        add(menu);
     }
 
     private void showSignInForm() {
         prepareView();
         add(createUserForm);
+
     }
 
     private void showLoginForm() {
@@ -42,6 +44,5 @@ public class MainView  extends VerticalLayout {
     private void prepareView() {
         removeAll();
         add(new Text("C L O T H E S   F A C T O R Y"));
-        add(menu);
     }
 }

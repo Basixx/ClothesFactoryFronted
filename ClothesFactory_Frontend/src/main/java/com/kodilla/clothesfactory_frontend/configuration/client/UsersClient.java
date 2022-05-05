@@ -13,18 +13,18 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-public class UserClient {
+public class UsersClient {
 
     private final RestTemplate restTemplate;
-    private static UserClient userClient;
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserClient.class);
+    private static UsersClient usersClient;
+    private static final Logger LOGGER = LoggerFactory.getLogger(UsersClient.class);
     private final String url = "http://localhost:8080/v1/users";
 
-    public static UserClient getInstance() {
-        if (userClient == null) {
-            userClient = new UserClient(new RestTemplate());
+    public static UsersClient getInstance() {
+        if (usersClient == null) {
+            usersClient = new UsersClient(new RestTemplate());
         }
-        return userClient;
+        return usersClient;
     }
 
     public List<User> getAllUsers() {

@@ -8,17 +8,17 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @RequiredArgsConstructor
-public class CartClient {
+public class CartsClient {
     private final RestTemplate restTemplate;
-    private static CartClient cartClient;
-    private static final Logger LOGGER = LoggerFactory.getLogger(CartClient.class);
+    private static CartsClient cartsClient;
+    private static final Logger LOGGER = LoggerFactory.getLogger(CartsClient.class);
     private final String url = "http://localhost:8080/v1/carts";
 
-    public static  CartClient getInstance() {
-        if (cartClient == null) {
-            cartClient = new CartClient(new RestTemplate());
+    public static CartsClient getInstance() {
+        if (cartsClient == null) {
+            cartsClient = new CartsClient(new RestTemplate());
         }
-        return cartClient;
+        return cartsClient;
     }
 
     public Cart getCartFromUser(int userId) {

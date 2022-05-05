@@ -8,6 +8,7 @@ import com.kodilla.clothesfactory_frontend.service.ClothService;
 import com.kodilla.clothesfactory_frontend.service.OrderService;
 import com.kodilla.clothesfactory_frontend.service.UserService;
 import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
@@ -15,7 +16,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import java.math.BigDecimal;
 
-public class AccountForm extends FormLayout {
+public class AccountForm extends VerticalLayout {
     private final int userId;
     private BigDecimal totalPrice;
     private Text price;
@@ -26,6 +27,7 @@ public class AccountForm extends FormLayout {
     Button createNewOrder = new Button("Create New Order",  event -> showCart());
     Button myOrders = new Button("My Orders", event -> showOrders());
     Button accountSettings = new Button("Account Settings", event -> showAccountSettings());
+    Button logOut = new Button("Log Out", event -> logout());
     private final Button addNewCloth = new Button("Add new cloth");
     private final Button createOrder = new Button("Create Order");
     private final Grid<Cloth> clothGrid = new Grid<>(Cloth.class);
@@ -33,7 +35,7 @@ public class AccountForm extends FormLayout {
     private final Grid<User> userGrid = new Grid<>(User.class);
     private final ClothForm clothForm = new ClothForm(this);
     private final ChangeUserCredentialsForm changeUserCredentialsForm = new ChangeUserCredentialsForm(this);
-    HorizontalLayout toolbar = new HorizontalLayout(createNewOrder, myOrders, accountSettings);
+    HorizontalLayout toolbar = new HorizontalLayout(createNewOrder, myOrders, accountSettings, logOut);
     VerticalLayout view = new VerticalLayout(new Text("ACCOUNT"), toolbar);
 
     public AccountForm(int userId) {
@@ -59,6 +61,7 @@ public class AccountForm extends FormLayout {
             clothForm.buttons.remove(clothForm.save);
             clothForm.buttons.add(clothForm.add);
         });
+        add(new Text("My Cart"));
         add(addNewCloth);
 
         createOrder.addClickListener(e -> createOrder(userId));
@@ -78,6 +81,7 @@ public class AccountForm extends FormLayout {
     private void showOrders() {
         showAccountView();
         orderGrid.setColumns("orderDate", "totalOrderPrice", "paid", "sent");
+        add(new Text("My Orders"));
         add(orderGrid);
         refreshOrders(userId);
 
@@ -92,9 +96,8 @@ public class AccountForm extends FormLayout {
         changeUserCredentialsForm.setUser(null);
         showAccountView();
         userGrid.setColumns("name", "surname", "phoneNumber", "emailAddress", "password");
-        VerticalLayout accountLayout = new VerticalLayout(userGrid, changeUserCredentialsForm);
+        VerticalLayout accountLayout = new VerticalLayout(new Text("Account Settings"), userGrid, changeUserCredentialsForm);
         add(accountLayout);
-        setSizeFull();
         refreshUser(userId);
         userGrid.asSingleSelect().addValueChangeListener(event -> changeUserCredentialsForm.setUser(userGrid.asSingleSelect().getValue()));
     }
@@ -118,5 +121,9 @@ public class AccountForm extends FormLayout {
 
     public int getUserId() {
         return userId;
+    }
+
+    private void logout(){
+        UI.getCurrent().getPage().reload();
     }
 }

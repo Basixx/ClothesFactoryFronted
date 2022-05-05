@@ -2,12 +2,15 @@ package com.kodilla.clothesfactory_frontend.form;
 
 import com.kodilla.clothesfactory_frontend.domain.User;
 import com.kodilla.clothesfactory_frontend.service.UserService;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 
-public class ChangeUserCredentialsForm extends FormLayout {
+public class ChangeUserCredentialsForm extends VerticalLayout {
     private final AccountForm accountForm;
     private final TextField name = new TextField("Name");
     private final TextField surname = new TextField("Surname");
@@ -39,11 +42,10 @@ public class ChangeUserCredentialsForm extends FormLayout {
         User user = binder.getBean();
         userService.deleteUser(user.getId().intValue());
         setUser(null);
-
+        UI.getCurrent().getPage().reload();
     }
     public void setUser(User user) {
         binder.setBean(user);
-
         setVisible(user != null);
     }
 }

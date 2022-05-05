@@ -2,13 +2,15 @@ package com.kodilla.clothesfactory_frontend.form;
 
 import com.kodilla.clothesfactory_frontend.domain.User;
 import com.kodilla.clothesfactory_frontend.service.UserService;
+import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 
-public class CreateUserForm extends FormLayout {
+public class CreateUserForm extends VerticalLayout {
 
     private final TextField name = new TextField("Name");
     private final TextField surname = new TextField("Surname");
@@ -17,6 +19,7 @@ public class CreateUserForm extends FormLayout {
     private final TextField password = new TextField("Password");
     private final UserService userService = UserService.getInstance();
     private final Binder<User> userBinder = new Binder<>(User.class);
+    Button previousPage = new Button("Previous Page", event -> previous());
 
     public CreateUserForm() {
         userBinder.bindInstanceFields(this);
@@ -24,7 +27,7 @@ public class CreateUserForm extends FormLayout {
         createAccount.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         createAccount.addClickListener(event -> saveUser());
 
-        add(name, surname, phoneNumber, emailAddress, password, createAccount);
+        add(new VerticalLayout(new Text("Create an account"), previousPage, name, surname, phoneNumber, emailAddress, password, createAccount));
     }
 
     private void saveUser() {
@@ -36,5 +39,9 @@ public class CreateUserForm extends FormLayout {
     private void showAccountForm(int userId) {
         removeAll();
         add(new AccountForm(userId));
+    }
+
+    private void previous(){
+        UI.getCurrent().getPage().reload();
     }
 }

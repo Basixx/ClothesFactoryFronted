@@ -1,6 +1,6 @@
 package com.kodilla.clothesfactory_frontend.service;
 
-import com.kodilla.clothesfactory_frontend.configuration.client.UserClient;
+import com.kodilla.clothesfactory_frontend.configuration.client.UsersClient;
 import com.kodilla.clothesfactory_frontend.domain.User;
 import java.util.List;
 
@@ -8,7 +8,7 @@ public class UserService {
 
 
     private static UserService userService;
-    private final UserClient userClient = UserClient.getInstance();
+    private final UsersClient usersClient = UsersClient.getInstance();
 
 
 
@@ -21,26 +21,26 @@ public class UserService {
     }
 
     public List<User> getAllUsers() {
-        return userClient.getAllUsers();
+        return usersClient.getAllUsers();
     }
 
     public User createUser(User user) {
-        return userClient.createUser(user);
+        return usersClient.createUser(user);
     }
 
     public User authenticateUser(String email, String password) {
-        return userClient.authenticateUser(email, password);
+        return usersClient.authenticateUser(email, password);
     }
 
     public User getUser(int userId) {
-        return userClient.getUser(userId);
+        return usersClient.getUser(userId);
     }
 
     public void updateUser(int userId, User user) {
-        userClient.updateUser(userId, user);
+        usersClient.updateUser(userId, user);
     }
 
     public void deleteUser(int userId) {
-        userClient.deleteUser(userId);
+        usersClient.deleteUser(userId);
     }
 }

@@ -1,29 +1,29 @@
 package com.kodilla.clothesfactory_frontend.service;
 
-import com.kodilla.clothesfactory_frontend.configuration.client.CartClient;
+import com.kodilla.clothesfactory_frontend.configuration.client.CartsClient;
 import com.kodilla.clothesfactory_frontend.domain.Cart;
 
 public class CartService {
 
     private static CartService cartService;
-    private final CartClient cartClient = CartClient.getInstance();
+    private final CartsClient cartsClient = CartsClient.getInstance();
 
     public static CartService getInstance() {
         if(cartService == null) {
-            cartService = new CartService(/*new ArrayList<>()*/);
+            cartService = new CartService();
         }
         return cartService;
     }
 
     public Cart getCartFromUser(int userId) {
-        return cartClient.getCartFromUser(userId);
+        return cartsClient.getCartFromUser(userId);
     }
 
     public void addClothToCart(int cartId, int clothId) {
-        cartClient.addClothToCart(cartId, clothId);
+        cartsClient.addClothToCart(cartId, clothId);
     }
 
     public void deleteClothFromCart(int cartId, int clothId) {
-        cartClient.deleteClothFromCart(cartId, clothId);
+        cartsClient.deleteClothFromCart(cartId, clothId);
     }
 }
