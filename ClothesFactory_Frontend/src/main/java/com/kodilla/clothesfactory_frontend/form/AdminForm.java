@@ -22,7 +22,7 @@ public class AdminForm extends VerticalLayout {
     private final OrderService orderService = OrderService.getInstance();
     private final UserService userService = UserService.getInstance();
     private final AdminTokenService adminTokenService = AdminTokenService.getInstance();
-    Button submit = new Button("SUBMIT", event-> authenticateAdmin());
+    private final Button submit = new Button("SUBMIT", event-> authenticateAdmin());
 
     private final Grid<Cloth> clothGrid = new Grid<>(Cloth.class);
     private final Grid<Order> orderGrid = new Grid<>(Order.class);
@@ -33,11 +33,11 @@ public class AdminForm extends VerticalLayout {
     private final Button users = new Button("Show All Users", e  -> showUsers());
     private final Button setToPaid = new Button("PAID", e -> setOrderToPaid());
     private final Button setToSent = new Button("SENT", e -> setOrderToSent());
-    Button previousPage = new Button("Previous Page", event -> previous());
-    Button logOut = new Button("Log Out", event -> logout());
-    TextField authentication = new TextField("AUTHENTICATION");
-    HorizontalLayout toolbar = new HorizontalLayout(clothes, orders, users, logOut);
-    VerticalLayout view = new VerticalLayout(new Text("ADMIN"), toolbar);
+    private final Button previousPage = new Button("Previous Page", event -> previous());
+    private final Button logOut = new Button("Log Out", event -> logout());
+    private final TextField authentication = new TextField("AUTHENTICATION");
+    private final HorizontalLayout toolbar = new HorizontalLayout(clothes, orders, users, logOut);
+    private final VerticalLayout view = new VerticalLayout(new Text("ADMIN"), toolbar);
     public AdminForm() {
 
         add(new VerticalLayout(new Text("ADMIN"), previousPage, authentication, submit));
@@ -64,7 +64,11 @@ public class AdminForm extends VerticalLayout {
         refreshAllOrders();
 
         orderGrid.asSingleSelect().addValueChangeListener(event -> {
-            clothGrid.setItems(clothService.getClothesFromOrder(orderGrid.asSingleSelect().getValue().getId().intValue()));
+            if( orderGrid.asSingleSelect().getValue() == null) {
+                return;
+            }
+            int orderId = orderGrid.asSingleSelect().getValue().getId().intValue();
+            clothGrid.setItems(clothService.getClothesFromOrder(orderId));
             add(clothGrid);
             add(new HorizontalLayout(setToPaid, setToSent));
         });

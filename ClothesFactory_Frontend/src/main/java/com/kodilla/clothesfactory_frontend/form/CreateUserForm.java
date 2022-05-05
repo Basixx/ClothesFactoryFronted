@@ -19,7 +19,7 @@ public class CreateUserForm extends VerticalLayout {
     private final TextField password = new TextField("Password");
     private final UserService userService = UserService.getInstance();
     private final Binder<User> userBinder = new Binder<>(User.class);
-    Button previousPage = new Button("Previous Page", event -> previous());
+    private final Button previousPage = new Button("Previous Page", event -> previous());
 
     public CreateUserForm() {
         userBinder.bindInstanceFields(this);
