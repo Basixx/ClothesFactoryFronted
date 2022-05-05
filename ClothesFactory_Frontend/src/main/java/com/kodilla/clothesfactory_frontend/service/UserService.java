@@ -3,46 +3,44 @@ package com.kodilla.clothesfactory_frontend.service;
 import com.kodilla.clothesfactory_frontend.configuration.client.UserClient;
 import com.kodilla.clothesfactory_frontend.domain.User;
 import java.util.List;
-import java.util.ArrayList;
 
 public class UserService {
 
-    private List<User> users;
-    private static UserService userService;
-    private UserClient userClient = UserClient.getInstance();
 
-    private UserService(List<User> users) {
-        this.users = users;
-//        this.users = exampleData();
-    }
+    private static UserService userService;
+    private final UserClient userClient = UserClient.getInstance();
+
+
 
     public static UserService getInstance() {
 
         if (userService == null) {
-            userService = new UserService(new ArrayList<User>());
+            userService = new UserService();
         }
         return userService;
-    }
-
-    public List<User> getUsers() {
-        return new ArrayList<>(users);
-    }
-
-    private List<User> exampleData() {
-        List<User> users = new ArrayList<>();
-        users.add(new User("John", "Smith", "111111", "john@smith.com", "password"));
-        return users;
     }
 
     public List<User> getAllUsers() {
         return userClient.getAllUsers();
     }
 
-    public void save(User user) {
-        this.users.add(user);
+    public User createUser(User user) {
+        return userClient.createUser(user);
     }
 
-    public void delete (User user) {
-        this.users.remove(user);
+    public User authenticateUser(String email, String password) {
+        return userClient.authenticateUser(email, password);
+    }
+
+    public User getUser(int userId) {
+        return userClient.getUser(userId);
+    }
+
+    public void updateUser(int userId, User user) {
+        userClient.updateUser(userId, user);
+    }
+
+    public void deleteUser(int userId) {
+        userClient.deleteUser(userId);
     }
 }

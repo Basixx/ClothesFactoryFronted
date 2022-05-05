@@ -7,41 +7,37 @@ import com.kodilla.clothesfactory_frontend.service.CartService;
 import com.kodilla.clothesfactory_frontend.service.ClothService;
 import com.kodilla.clothesfactory_frontend.service.OrderService;
 import com.kodilla.clothesfactory_frontend.service.UserService;
-import com.kodilla.clothesfactory_frontend.views.MainView;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.data.binder.Binder;
-
 import java.math.BigDecimal;
 
 public class AccountForm extends FormLayout {
-    private MainView mainView;
-    private ClothService clothService = ClothService.getInstance();
-    private OrderService orderService = OrderService.getInstance();
-    private UserService userService = UserService.getInstance();
-    private CartService cartService = CartService.getInstance();
-    Button createNewOrder = new Button("Create New Order",  event -> showClothes());
+    private final int userId;
+    private BigDecimal totalPrice;
+    private Text price;
+    private final ClothService clothService = ClothService.getInstance();
+    private final OrderService orderService = OrderService.getInstance();
+    private final UserService userService = UserService.getInstance();
+    private final CartService cartService = CartService.getInstance();
+    Button createNewOrder = new Button("Create New Order",  event -> showCart());
     Button myOrders = new Button("My Orders", event -> showOrders());
     Button accountSettings = new Button("Account Settings", event -> showAccountSettings());
-    private Button addNewCloth = new Button("Add new cloth");
-    private Button createOrder = new Button("Create Order");
-    private Grid<Cloth> clothGrid = new Grid<>(Cloth.class);
-    private Grid<Order> orderGrid = new Grid<>(Order.class);
-    private Grid<User> userGrid = new Grid<>(User.class);
-    private ClothForm clothForm = new ClothForm(this);
-    private ChangeUserCredentialsForm changeUserCredentialsForm = new ChangeUserCredentialsForm(this);
-    private BigDecimal totalPrice = cartService.getCartByUser(98).getTotalPrice();
-    private Text price = new Text("Total price: " + totalPrice);
-    private Binder<Order> orderBinder = new Binder<>(Order.class);
+    private final Button addNewCloth = new Button("Add new cloth");
+    private final Button createOrder = new Button("Create Order");
+    private final Grid<Cloth> clothGrid = new Grid<>(Cloth.class);
+    private final Grid<Order> orderGrid = new Grid<>(Order.class);
+    private final Grid<User> userGrid = new Grid<>(User.class);
+    private final ClothForm clothForm = new ClothForm(this);
+    private final ChangeUserCredentialsForm changeUserCredentialsForm = new ChangeUserCredentialsForm(this);
     HorizontalLayout toolbar = new HorizontalLayout(createNewOrder, myOrders, accountSettings);
     VerticalLayout view = new VerticalLayout(new Text("ACCOUNT"), toolbar);
 
-    public AccountForm(MainView mainView) {
-        this.mainView = mainView;
+    public AccountForm(int userId) {
+        this.userId = userId;
         add(view);
     }
 
@@ -50,10 +46,9 @@ public class AccountForm extends FormLayout {
         add(view);
     }
 
-    private void showClothes() {
-
-//        int totalPrice = cartService.getCartByUser(98).size();
-       // Text price = new Text("Total price: " + totalPrice);
+    private void showCart() {
+        totalPrice = (cartService.getCartFromUser(userId).getTotalPrice() == null ? BigDecimal.ZERO : cartService.getCartFromUser(userId).getTotalPrice());
+        price = new Text("Total price: " + totalPrice);
         clothForm.setCloth(null);
         showAccountView();
 
@@ -65,10 +60,13 @@ public class AccountForm extends FormLayout {
             clothForm.buttons.add(clothForm.add);
         });
         add(addNewCloth);
+
+        createOrder.addClickListener(e -> createOrder(userId));
+
         VerticalLayout clothLayout = new VerticalLayout(clothGrid, price, clothForm);
         add(clothLayout);
         setSizeFull();
-        refreshClothes();
+        refreshClothes(userId);
         clothGrid.asSingleSelect().addValueChangeListener(event -> {
             clothForm.setCloth(clothGrid.asSingleSelect().getValue());
             clothForm.buttons.remove(clothForm.add);
@@ -78,19 +76,15 @@ public class AccountForm extends FormLayout {
     }
 
     private void showOrders() {
-//        Order order = orderBinder.getBean();
-//        System.out.println(order.getId());
         showAccountView();
         orderGrid.setColumns("orderDate", "totalOrderPrice", "paid", "sent");
         add(orderGrid);
-        refreshOrders(98);
+        refreshOrders(userId);
+
         orderGrid.asSingleSelect().addValueChangeListener(event -> {
-//            Order order = orderBinder.getBean();
-//            System.out.println(order.getId());
-//            Long id = clothGrid.asSingleSelect().getValue().getId();
-            clothGrid.setItems(clothService.getClothesFromOrder(99));  //tutaj dać by ORDER
+
+            clothGrid.setItems(clothService.getClothesFromOrder(orderGrid.asSingleSelect().getValue().getId().intValue()));
             add(clothGrid);
-//            setOrder(null);
         });
     }
 
@@ -100,30 +94,29 @@ public class AccountForm extends FormLayout {
         userGrid.setColumns("name", "surname", "phoneNumber", "emailAddress", "password");
         VerticalLayout accountLayout = new VerticalLayout(userGrid, changeUserCredentialsForm);
         add(accountLayout);
-        setSizeFull();;
-        refreshUser();
+        setSizeFull();
+        refreshUser(userId);
         userGrid.asSingleSelect().addValueChangeListener(event -> changeUserCredentialsForm.setUser(userGrid.asSingleSelect().getValue()));
     }
 
-    public void refreshClothes() {
-        clothGrid.setItems(clothService.getClothesFromUserCart(98));    //HARDCODED
-        totalPrice = cartService.getCartByUser(98).getTotalPrice();
+    public void refreshClothes(int userID) {
+        clothGrid.setItems(clothService.getClothesFromUserCart(userID));
+        totalPrice = cartService.getCartFromUser(userID).getTotalPrice();
         price.setText("Total price: " + totalPrice);
     }
-    public void refreshOrders(int userId) {
-        orderGrid.setItems(orderService.getOrdersByUser(userId));
+    public void refreshOrders(int userID) {
+        orderGrid.setItems(orderService.getOrdersByUser(userID));
     }
-    public void refreshUser() {
-        userGrid.setItems(userService.getUsers());  //tu user by ID
+    public void refreshUser(int userID) {
+        userGrid.setItems(userService.getUser(userID));
     }
 
-    public void setOrder(Order order) {
-        orderBinder.setBean(order);
+    private void createOrder(int userID) {
+        orderService.createOrder(userID);
+        refreshClothes(userID);
+    }
 
-        if (order == null) {
-            setVisible(false);
-        } else {
-            setVisible(true);
-        }
+    public int getUserId() {
+        return userId;
     }
 }

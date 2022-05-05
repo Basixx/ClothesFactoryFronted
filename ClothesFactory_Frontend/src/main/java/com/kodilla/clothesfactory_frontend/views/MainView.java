@@ -11,13 +11,13 @@ import com.vaadin.flow.router.Route;
 
 @Route
 public class MainView  extends VerticalLayout {
-    private Button login = new Button("Login", event -> showLoginForm());
-    private Button signIn = new Button("Sign in", event -> showSignInForm());
-    private Button admin = new Button("Admin", event -> showAdminForm());
+    private final Button login = new Button("Login", event -> showLoginForm());
+    private final Button signIn = new Button("Sign in", event -> showSignInForm());
+    private final Button admin = new Button("Admin", event -> showAdminForm());
 
-    private LoginForm loginForm = new LoginForm(this);
-    private CreateUserForm createUserForm = new CreateUserForm(this);
-    private AdminForm adminForm = new AdminForm(this);
+    private final LoginForm loginForm = new LoginForm();
+    private final CreateUserForm createUserForm = new CreateUserForm();
+    private final AdminForm adminForm = new AdminForm();
     HorizontalLayout menu = new HorizontalLayout(login, signIn, admin);
 
     public MainView() {

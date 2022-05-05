@@ -7,7 +7,6 @@ import com.kodilla.clothesfactory_frontend.form.auxiliary.ClothFashion;
 import com.kodilla.clothesfactory_frontend.form.auxiliary.ClothFont;
 import com.kodilla.clothesfactory_frontend.form.auxiliary.ClothSize;
 import lombok.*;
-
 import java.math.BigDecimal;
 
 @Getter

@@ -7,17 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
 @RequiredArgsConstructor
 public class CartClient {
     private final RestTemplate restTemplate;
     private static CartClient cartClient;
     private static final Logger LOGGER = LoggerFactory.getLogger(CartClient.class);
-    private String url = "http://localhost:8080/v1/carts";
+    private final String url = "http://localhost:8080/v1/carts";
 
     public static  CartClient getInstance() {
         if (cartClient == null) {
@@ -26,15 +21,12 @@ public class CartClient {
         return cartClient;
     }
 
-    public Cart getCart(int userId) {
+    public Cart getCartFromUser(int userId) {
         try {
-            Cart cartsResponse = restTemplate.getForObject(
+            return restTemplate.getForObject(
                     url + "/" + userId,
                     Cart.class
             );
-            return cartsResponse;
-//                    .map(Arrays::asList)
-//                    .orElse(Collections.emptyList());
         } catch (RestClientException e) {
             LOGGER.error(e.getMessage(), e);
             return null;

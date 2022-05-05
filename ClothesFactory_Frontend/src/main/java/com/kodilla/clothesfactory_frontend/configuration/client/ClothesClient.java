@@ -4,15 +4,12 @@ import com.kodilla.clothesfactory_frontend.domain.Cloth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 @RequiredArgsConstructor
 public class ClothesClient {
@@ -20,7 +17,7 @@ public class ClothesClient {
     private final RestTemplate restTemplate;
     private static ClothesClient clothesClient;
     private static final Logger LOGGER = LoggerFactory.getLogger(ClothesClient.class);
-    private String url = "http://localhost:8080/v1/clothes";
+    private final String url = "http://localhost:8080/v1/clothes";
 
     public static ClothesClient getInstance() {
         if (clothesClient == null) {

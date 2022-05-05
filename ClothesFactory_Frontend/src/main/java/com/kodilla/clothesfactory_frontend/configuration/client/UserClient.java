@@ -18,7 +18,7 @@ public class UserClient {
     private final RestTemplate restTemplate;
     private static UserClient userClient;
     private static final Logger LOGGER = LoggerFactory.getLogger(UserClient.class);
-    private String url = "http://localhost:8080/v1/users";
+    private final String url = "http://localhost:8080/v1/users";
 
     public static UserClient getInstance() {
         if (userClient == null) {
@@ -42,18 +42,27 @@ public class UserClient {
         }
     }
 
-    public List<User> getUser(int userId) {
+    public User getUser(int userId) {
         try {
-            User[] usersResponse = restTemplate.getForObject(
+            return restTemplate.getForObject(
                     url + "/" + userId,
-                    User[].class
+                    User.class
             );
-            return Optional.ofNullable(usersResponse)
-                    .map(Arrays::asList)
-                    .orElse(Collections.emptyList());
         } catch (RestClientException e) {
             LOGGER.error(e.getMessage(), e);
-            return Collections.emptyList();
+            return null;
+        }
+    }
+
+    public User authenticateUser(String email, String password) {
+        try {
+            return restTemplate.getForObject(
+                    url + "/" + email + "/" + password,
+                    User.class
+            );
+        } catch (RestClientException e) {
+            LOGGER.error(e.getMessage(), e);
+            return null;
         }
     }
 

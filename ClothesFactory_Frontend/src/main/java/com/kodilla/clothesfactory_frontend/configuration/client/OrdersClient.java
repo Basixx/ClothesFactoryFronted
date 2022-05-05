@@ -1,13 +1,11 @@
 package com.kodilla.clothesfactory_frontend.configuration.client;
 
-import com.kodilla.clothesfactory_frontend.domain.Cloth;
 import com.kodilla.clothesfactory_frontend.domain.Order;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -18,7 +16,7 @@ public class OrdersClient {
     private final RestTemplate restTemplate;
     private static OrdersClient ordersClient;
     private static final Logger LOGGER = LoggerFactory.getLogger(OrdersClient.class);
-    private String url = "http://localhost:8080/v1/orders";
+    private final String url = "http://localhost:8080/v1/orders";
 
     public static OrdersClient getInstance() {
         if (ordersClient == null) {
@@ -45,11 +43,10 @@ public class OrdersClient {
 
     public Order getOrder(int orderId) {
         try {
-            Order orderResponse = restTemplate.getForObject(
+            return restTemplate.getForObject(
                     url + "/" + orderId,
                     Order.class
             );
-            return orderResponse;
         } catch (RestClientException e) {
             LOGGER.error(e.getMessage(), e);
             return null;
@@ -71,12 +68,8 @@ public class OrdersClient {
         }
     }
 
-    public Order createOrder(Order newOrder) {
-        return restTemplate.postForObject(
-                url,
-                newOrder,
-                Order.class
-        );
+    public void createOrder(int userId) {
+        restTemplate.postForObject(url + "/" + userId, userId, Order.class);
     }
 
     public void setOrderToPaid(int orderId) {

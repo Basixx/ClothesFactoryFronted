@@ -12,6 +12,9 @@ import lombok.*;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
+    @JsonProperty("id")
+    private Long id;
+
     @JsonProperty("name")
     private String name;
 
@@ -26,4 +29,12 @@ public class User {
 
     @JsonProperty("password")
     private String password;
+
+    public User(String name, String surname, String phoneNumber, String emailAddress, String password) {
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        this.password = password;
+    }
 }
