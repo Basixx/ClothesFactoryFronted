@@ -18,7 +18,7 @@ public class MainView  extends VerticalLayout {
     private final LoginForm loginForm = new LoginForm();
     private final CreateUserForm createUserForm = new CreateUserForm();
     private final AdminForm adminForm = new AdminForm();
-    HorizontalLayout menu = new HorizontalLayout(login, signIn, admin);
+    private final HorizontalLayout menu = new HorizontalLayout(login, signIn, admin);
 
     public MainView() {
         prepareView();

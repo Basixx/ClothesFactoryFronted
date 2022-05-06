@@ -1,6 +1,5 @@
 package com.kodilla.clothesfactory_frontend.form;
 
-
 import com.kodilla.clothesfactory_frontend.domain.Cart;
 import com.kodilla.clothesfactory_frontend.domain.Cloth;
 import com.kodilla.clothesfactory_frontend.form.auxiliary.*;
@@ -13,7 +12,6 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
-
 import java.util.ArrayList;
 import java.util.List;
 

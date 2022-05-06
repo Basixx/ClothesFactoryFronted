@@ -10,12 +10,12 @@ import com.kodilla.clothesfactory_frontend.service.UserService;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import org.springframework.web.client.RestClientException;
 
 public class AdminForm extends VerticalLayout {
     private final ClothService clothService = ClothService.getInstance();
@@ -34,13 +34,14 @@ public class AdminForm extends VerticalLayout {
     private final Button setToPaid = new Button("PAID", e -> setOrderToPaid());
     private final Button setToSent = new Button("SENT", e -> setOrderToSent());
     private final Button previousPage = new Button("Previous Page", event -> previous());
+    private final Button token = new Button("Generate Token", event -> generateToken());
     private final Button logOut = new Button("Log Out", event -> logout());
     private final TextField authentication = new TextField("AUTHENTICATION");
     private final HorizontalLayout toolbar = new HorizontalLayout(clothes, orders, users, logOut);
     private final VerticalLayout view = new VerticalLayout(new Text("ADMIN"), toolbar);
     public AdminForm() {
 
-        add(new VerticalLayout(new Text("ADMIN"), previousPage, authentication, submit));
+        add(new VerticalLayout(new Text("ADMIN"), previousPage, token, authentication, submit));
     }
 
     private void showAdminView() {
@@ -87,13 +88,23 @@ public class AdminForm extends VerticalLayout {
     }
 
     private void setOrderToPaid() {
-        orderService.setOrderToPaid(orderGrid.asSingleSelect().getValue().getId().intValue());
-        refreshAllOrders();
+        try {
+            orderService.setOrderToPaid(orderGrid.asSingleSelect().getValue().getId().intValue());
+        } catch (RestClientException e) {
+            Notification.show(e.getMessage());
+        } finally {
+            refreshAllOrders();
+        }
     }
 
     private void setOrderToSent() {
-        orderService.setOrderToSent(orderGrid.asSingleSelect().getValue().getId().intValue());
-        refreshAllOrders();
+        try {
+            orderService.setOrderToSent(orderGrid.asSingleSelect().getValue().getId().intValue());
+        } catch (RestClientException e) {
+            Notification.show(e.getMessage());
+        } finally {
+            refreshAllOrders();
+        }
     }
 
     private void authenticateAdmin() {
@@ -106,11 +117,15 @@ public class AdminForm extends VerticalLayout {
         }
     }
 
-    private void logout(){
+    private void logout() {
         UI.getCurrent().getPage().reload();
     }
 
-    private void previous(){
+    private void previous() {
         UI.getCurrent().getPage().reload();
+    }
+
+    private void generateToken() {
+        adminTokenService.createToken();
     }
 }

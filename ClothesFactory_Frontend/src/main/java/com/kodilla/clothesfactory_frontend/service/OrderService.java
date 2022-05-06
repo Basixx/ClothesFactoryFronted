@@ -2,6 +2,7 @@ package com.kodilla.clothesfactory_frontend.service;
 
 import com.kodilla.clothesfactory_frontend.configuration.client.OrdersClient;
 import com.kodilla.clothesfactory_frontend.domain.Order;
+import org.springframework.web.client.RestClientException;
 import java.util.List;
 
 public class OrderService {
@@ -25,14 +26,29 @@ public class OrderService {
     }
 
     public void createOrder(int userId) {
-        ordersClient.createOrder(userId);
+        try {
+            ordersClient.createOrder(userId);
+        } catch (RestClientException e) {
+            throw e;
+        }
+
     }
 
     public void setOrderToPaid(int orderId) {
-        ordersClient.setOrderToPaid(orderId);
+        try {
+            ordersClient.setOrderToPaid(orderId);
+        } catch (RestClientException e) {
+            throw e;
+        }
+
     }
 
     public void setOrderToSent(int orderId) {
-        ordersClient.setOrderToSent(orderId);
+        try {
+            ordersClient.setOrderToSent(orderId);
+        } catch (RestClientException e) {
+            throw e;
+        }
+
     }
 }

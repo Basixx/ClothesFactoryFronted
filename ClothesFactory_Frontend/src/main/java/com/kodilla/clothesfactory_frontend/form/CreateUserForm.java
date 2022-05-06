@@ -6,9 +6,11 @@ import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import org.springframework.web.client.RestClientException;
 
 public class CreateUserForm extends VerticalLayout {
 
@@ -32,8 +34,13 @@ public class CreateUserForm extends VerticalLayout {
 
     private void saveUser() {
         User user = new User(name.getValue(), surname.getValue(), phoneNumber.getValue(), emailAddress.getValue(), password.getValue());
-        User createdUser = userService.createUser(user);
-        showAccountForm(createdUser.getId().intValue());
+        try {
+            User createdUser = userService.createUser(user);
+            showAccountForm(createdUser.getId().intValue());
+        } catch (RestClientException e) {
+            Notification.show(e.getMessage());
+        }
+
     }
 
     private void showAccountForm(int userId) {

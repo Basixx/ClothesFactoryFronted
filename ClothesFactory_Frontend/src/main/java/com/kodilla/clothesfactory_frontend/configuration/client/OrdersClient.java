@@ -69,21 +69,37 @@ public class OrdersClient {
     }
 
     public void createOrder(int userId) {
-        restTemplate.postForObject(url + "/" + userId, userId, Order.class);
+        try {
+            restTemplate.postForObject(url + "/" + userId, userId, Order.class);
+        } catch (RestClientException e) {
+            throw e;
+        }
+
     }
 
     public void setOrderToPaid(int orderId) {
-        restTemplate.put(
-                url + "/paid/" + orderId,
-                Order.class
-        );
+        try{
+            restTemplate.put(
+                    url + "/paid/" + orderId,
+                    Order.class
+            );
+        } catch (RestClientException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw e;
+        }
     }
 
     public void setOrderToSent(int orderId) {
-        restTemplate.put(
-                url + "/sent/" + orderId,
-                Order.class
-        );
+        try {
+            restTemplate.put(
+                    url + "/sent/" + orderId,
+                    Order.class
+            );
+        } catch (RestClientException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw e;
+        }
+
     }
 }
 

@@ -34,10 +34,10 @@ public class AdminTokenClient {
         }
     }
 
-    public AdminToken createToken(AdminToken newAdminToken) {
-        return restTemplate.postForObject(
+    public void createToken() {
+        restTemplate.postForObject(
                 url,
-                newAdminToken,
+                null,
                 AdminToken.class
         );
     }

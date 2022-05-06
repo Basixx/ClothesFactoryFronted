@@ -10,10 +10,11 @@ import com.kodilla.clothesfactory_frontend.service.UserService;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import org.springframework.web.client.RestClientException;
 import java.math.BigDecimal;
 
 public class AccountForm extends VerticalLayout {
@@ -24,10 +25,10 @@ public class AccountForm extends VerticalLayout {
     private final OrderService orderService = OrderService.getInstance();
     private final UserService userService = UserService.getInstance();
     private final CartService cartService = CartService.getInstance();
-    Button createNewOrder = new Button("Create New Order",  event -> showCart());
-    Button myOrders = new Button("My Orders", event -> showOrders());
-    Button accountSettings = new Button("Account Settings", event -> showAccountSettings());
-    Button logOut = new Button("Log Out", event -> logout());
+    private final Button createNewOrder = new Button("Create New Order",  event -> showCart());
+    private final Button myOrders = new Button("My Orders", event -> showOrders());
+    private final Button accountSettings = new Button("Account Settings", event -> showAccountSettings());
+    private final Button logOut = new Button("Log Out", event -> logout());
     private final Button addNewCloth = new Button("Add new cloth");
     private final Button createOrder = new Button("Create Order");
     private final Grid<Cloth> clothGrid = new Grid<>(Cloth.class);
@@ -115,8 +116,13 @@ public class AccountForm extends VerticalLayout {
     }
 
     private void createOrder(int userID) {
-        orderService.createOrder(userID);
-        refreshClothes(userID);
+        try {
+            orderService.createOrder(userID);
+        } catch (RestClientException e) {
+            Notification.show(e.getMessage());
+        } finally {
+            refreshClothes(userID);
+        }
     }
 
     public int getUserId() {

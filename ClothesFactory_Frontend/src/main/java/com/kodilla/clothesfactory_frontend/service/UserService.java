@@ -2,15 +2,13 @@ package com.kodilla.clothesfactory_frontend.service;
 
 import com.kodilla.clothesfactory_frontend.configuration.client.UsersClient;
 import com.kodilla.clothesfactory_frontend.domain.User;
+import org.springframework.web.client.RestClientException;
 import java.util.List;
 
 public class UserService {
 
-
     private static UserService userService;
     private final UsersClient usersClient = UsersClient.getInstance();
-
-
 
     public static UserService getInstance() {
 
@@ -25,11 +23,20 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        return usersClient.createUser(user);
+        try {
+            return usersClient.createUser(user);
+        } catch (RestClientException e) {
+            throw e;
+        }
+
     }
 
     public User authenticateUser(String email, String password) {
-        return usersClient.authenticateUser(email, password);
+        try{
+            return usersClient.authenticateUser(email, password);
+        } catch (RestClientException e){
+            throw e;
+        }
     }
 
     public User getUser(int userId) {

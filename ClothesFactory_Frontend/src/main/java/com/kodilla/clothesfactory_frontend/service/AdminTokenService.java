@@ -2,7 +2,6 @@ package com.kodilla.clothesfactory_frontend.service;
 
 import com.kodilla.clothesfactory_frontend.configuration.client.AdminTokenClient;
 import com.kodilla.clothesfactory_frontend.domain.AdminToken;
-import org.atmosphere.interceptor.AtmosphereResourceStateRecovery;
 
 public class AdminTokenService {
 
@@ -20,7 +19,7 @@ public class AdminTokenService {
         return adminTokenClient.existsToken(token);
     }
 
-    public AdminToken createToken(AdminToken adminToken) {
-        return adminTokenClient.createToken(adminToken);
+    public void createToken() {
+        adminTokenClient.createToken();
     }
 }
