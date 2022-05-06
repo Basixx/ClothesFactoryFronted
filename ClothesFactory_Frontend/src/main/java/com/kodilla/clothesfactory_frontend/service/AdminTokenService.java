@@ -22,4 +22,8 @@ public class AdminTokenService {
     public void createToken() {
         adminTokenClient.createToken();
     }
+
+    public void deleteTokens() {
+        adminTokenClient.deleteTokens();
+    }
 }

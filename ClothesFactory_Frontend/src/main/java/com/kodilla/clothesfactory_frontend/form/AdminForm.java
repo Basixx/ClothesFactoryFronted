@@ -112,6 +112,7 @@ public class AdminForm extends VerticalLayout {
 
         if(adminTokenService.existsToken(token)) {
             showAdminView();
+            adminTokenService.deleteTokens();
         } else {
             Notification.show("Token does not exist");
         }

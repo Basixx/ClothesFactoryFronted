@@ -41,4 +41,8 @@ public class AdminTokenClient {
                 AdminToken.class
         );
     }
+
+    public void deleteTokens() {
+        restTemplate.delete(url);
+    }
 }
