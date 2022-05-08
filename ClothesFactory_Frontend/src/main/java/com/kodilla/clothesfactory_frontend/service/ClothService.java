@@ -37,7 +37,7 @@ public class ClothService {
             throw e;
         }
     }
-    public void updateCloth(int clothId, Cloth cloth) { //todo
+    public void updateCloth(int clothId, Cloth cloth) {
         try {
             clothesClient.updateCloth(clothId, cloth);
         } catch (RestClientException e) {

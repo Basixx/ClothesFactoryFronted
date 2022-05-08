@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClothForm extends FormLayout {
+    private final CartForm cartForm;
     private final ComboBox<ClothFashion> fashion = new ComboBox<>("Fashion");
     private final ComboBox<ClothColor> color = new ComboBox<>("Color");
     private final TextField print = new TextField("Print");
@@ -30,7 +31,6 @@ public class ClothForm extends FormLayout {
     public Button delete = new Button("Delete");
     public Button save = new Button("SAVE");
     private final Binder<Cloth> clothBinder = new Binder<>(Cloth.class);
-    private final CartForm cartForm;
     private final ClothService clothService = ClothService.getInstance();
     private final CartService cartService = CartService.getInstance();
     public HorizontalLayout buttons = new HorizontalLayout(add, delete);

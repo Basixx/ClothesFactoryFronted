@@ -1,10 +1,8 @@
 package com.kodilla.clothesfactory_frontend.form.account;
 
 import com.kodilla.clothesfactory_frontend.domain.Cloth;
-import com.kodilla.clothesfactory_frontend.domain.ExchangeRate;
 import com.kodilla.clothesfactory_frontend.service.CartService;
 import com.kodilla.clothesfactory_frontend.service.ClothService;
-import com.kodilla.clothesfactory_frontend.service.ExchangeRateService;
 import com.kodilla.clothesfactory_frontend.service.OrderService;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
@@ -13,33 +11,24 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.springframework.web.client.RestClientException;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class CartForm extends VerticalLayout {
     private final CartService cartService = CartService.getInstance();
     private final OrderService orderService = OrderService.getInstance();
     private final ClothService clothService = ClothService.getInstance();
-    private final ExchangeRateService exchangeRateService = ExchangeRateService.getInstance();
     private final Grid<Cloth> clothGrid = new Grid<>(Cloth.class);
     private final Button addNewCloth = new Button("Add new cloth");
     private final Button createOrder = new Button("Create Order");
-    private final ExchangeRate exchangeRate;
     private BigDecimal totalPrice;
-    private BigDecimal euroTotalPrice;
     private final Text price;
-    private final Text euroPrice;
 
     public CartForm(int userId) {
         ClothForm clothForm = new ClothForm(this, userId);
 
         totalPrice = (cartService.getCartFromUser(userId).getTotalPrice() == null ? BigDecimal.ZERO : cartService.getCartFromUser(userId).getTotalPrice());
         price = new Text("Total price: " + totalPrice + " PLN");
-        exchangeRate = exchangeRateService.getExchange("EUR", "PLN");
-        euroTotalPrice = totalPrice.multiply(exchangeRate.getCurrencyRate());
-        euroPrice = new Text("Price in EUR: " + euroTotalPrice.doubleValue() + " EUR");
 
         clothForm.setCloth(null);
-
 
         clothGrid.setColumns("fashion", "color", "print", "font", "printColor", "size", "quantity", "price");
         addNewCloth.addClickListener(e -> {
@@ -48,6 +37,7 @@ public class CartForm extends VerticalLayout {
             clothForm.buttons.remove(clothForm.save);
             clothForm.buttons.add(clothForm.add);
         });
+
         add(new Text("My Cart"));
         add(addNewCloth);
 
@@ -55,7 +45,7 @@ public class CartForm extends VerticalLayout {
 
         VerticalLayout clothLayout = new VerticalLayout(clothGrid, price);
         add(clothLayout);
-        add(new VerticalLayout( euroPrice, clothForm));
+        add(clothForm);
         setSizeFull();
         refreshClothes(userId);
         clothGrid.asSingleSelect().addValueChangeListener(event -> {
@@ -63,6 +53,7 @@ public class CartForm extends VerticalLayout {
             clothForm.buttons.remove(clothForm.add);
             clothForm.buttons.add(clothForm.save);
         });
+        add(new CurrencyForm(totalPrice));
         add(createOrder);
     }
 
@@ -81,7 +72,6 @@ public class CartForm extends VerticalLayout {
         clothGrid.setItems(clothService.getClothesFromUserCart(userID));
         totalPrice = cartService.getCartFromUser(userID).getTotalPrice();
         price.setText("Total price: " + totalPrice);
-        euroTotalPrice = totalPrice.multiply(exchangeRate.getCurrencyRate());
-        euroPrice.setText("Price in EUR: " + euroTotalPrice.doubleValue());
+        //todo rozwiązać problem z odświeżaniem walut np currency set text
     }
 }
