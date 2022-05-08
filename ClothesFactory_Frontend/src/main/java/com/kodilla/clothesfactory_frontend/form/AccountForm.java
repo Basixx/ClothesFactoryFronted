@@ -1,8 +1,8 @@
 package com.kodilla.clothesfactory_frontend.form;
 
 import com.kodilla.clothesfactory_frontend.domain.Cloth;
-import com.kodilla.clothesfactory_frontend.domain.Order;
 import com.kodilla.clothesfactory_frontend.domain.User;
+import com.kodilla.clothesfactory_frontend.form.auxiliary.OrdersForm;
 import com.kodilla.clothesfactory_frontend.service.CartService;
 import com.kodilla.clothesfactory_frontend.service.ClothService;
 import com.kodilla.clothesfactory_frontend.service.OrderService;
@@ -32,9 +32,9 @@ public class AccountForm extends VerticalLayout {
     private final Button addNewCloth = new Button("Add new cloth");
     private final Button createOrder = new Button("Create Order");
     private final Grid<Cloth> clothGrid = new Grid<>(Cloth.class);
-    private final Grid<Order> orderGrid = new Grid<>(Order.class);
     private final Grid<User> userGrid = new Grid<>(User.class);
     private final ClothForm clothForm = new ClothForm(this);
+
     private final ChangeUserCredentialsForm changeUserCredentialsForm = new ChangeUserCredentialsForm(this);
     HorizontalLayout toolbar = new HorizontalLayout(createNewOrder, myOrders, accountSettings, logOut);
     VerticalLayout view = new VerticalLayout(new Text("ACCOUNT"), toolbar);
@@ -81,16 +81,7 @@ public class AccountForm extends VerticalLayout {
 
     private void showOrders() {
         showAccountView();
-        orderGrid.setColumns("orderDate", "totalOrderPrice", "paid", "sent");
-        add(new Text("My Orders"));
-        add(orderGrid);
-        refreshOrders(userId);
-
-        orderGrid.asSingleSelect().addValueChangeListener(event -> {
-
-            clothGrid.setItems(clothService.getClothesFromOrder(orderGrid.asSingleSelect().getValue().getId().intValue()));
-            add(clothGrid);
-        });
+        add(new OrdersForm(userId));
     }
 
     private void showAccountSettings() {
@@ -108,9 +99,7 @@ public class AccountForm extends VerticalLayout {
         totalPrice = cartService.getCartFromUser(userID).getTotalPrice();
         price.setText("Total price: " + totalPrice);
     }
-    public void refreshOrders(int userID) {
-        orderGrid.setItems(orderService.getOrdersByUser(userID));
-    }
+
     public void refreshUser(int userID) {
         userGrid.setItems(userService.getUser(userID));
     }
