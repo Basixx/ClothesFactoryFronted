@@ -8,8 +8,8 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 
-public class ChangeUserCredentialsForm extends VerticalLayout {
-    private final AccountForm accountForm;
+public class UserForm extends VerticalLayout {
+    private final AccountSettingsForm accountSettingsFormForm;
     private final TextField name = new TextField("Name");
     private final TextField surname = new TextField("Surname");
     private final TextField phoneNumber = new TextField("Phone Number");
@@ -21,18 +21,18 @@ public class ChangeUserCredentialsForm extends VerticalLayout {
 
     private final Button deleteAccount = new Button("Delete Account", event -> delete());
 
-    public ChangeUserCredentialsForm(AccountForm accountForm) {
-        this.accountForm = accountForm;
+    public UserForm(AccountSettingsForm accountSettingsForm, int id) {
+        this.accountSettingsFormForm = accountSettingsForm;
+        setUser(null);
         add(name, surname, phoneNumber, emailAddress, password, updateAccount, deleteAccount);
         binder.bindInstanceFields(this);
-        updateAccount.addClickListener(event -> save(accountForm.getUserId()));
-
+        updateAccount.addClickListener(event -> save(id));
     }
 
     private void save(int userId) {
         User user = binder.getBean();
         userService.updateUser(userId, user);
-        accountForm.refreshUser(accountForm.getUserId());
+        accountSettingsFormForm.refreshUser(userId);
         setUser(null);
     }
 
