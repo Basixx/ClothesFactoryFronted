@@ -1,8 +1,8 @@
 package com.kodilla.clothesfactory_frontend.views;
 
-import com.kodilla.clothesfactory_frontend.form.AdminForm;
-import com.kodilla.clothesfactory_frontend.form.LoginForm;
-import com.kodilla.clothesfactory_frontend.form.CreateUserForm;
+import com.kodilla.clothesfactory_frontend.form.admin.AdminForm;
+import com.kodilla.clothesfactory_frontend.form.account.LoginForm;
+import com.kodilla.clothesfactory_frontend.form.account.CreateUserForm;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;

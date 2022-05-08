@@ -1,4 +1,4 @@
-package com.kodilla.clothesfactory_frontend.form;
+package com.kodilla.clothesfactory_frontend.form.account;
 
 import com.kodilla.clothesfactory_frontend.domain.User;
 import com.kodilla.clothesfactory_frontend.service.UserService;
@@ -13,7 +13,6 @@ public class UserForm extends VerticalLayout {
     private final TextField name = new TextField("Name");
     private final TextField surname = new TextField("Surname");
     private final TextField phoneNumber = new TextField("Phone Number");
-    private final TextField emailAddress = new TextField("Email Address");
     private final TextField password = new TextField("Password");
     private final UserService userService = UserService.getInstance();
     private final Binder<User> binder = new Binder<>(User.class);
@@ -24,7 +23,7 @@ public class UserForm extends VerticalLayout {
     public UserForm(AccountSettingsForm accountSettingsForm, int id) {
         this.accountSettingsFormForm = accountSettingsForm;
         setUser(null);
-        add(name, surname, phoneNumber, emailAddress, password, updateAccount, deleteAccount);
+        add(name, surname, phoneNumber, password, updateAccount, deleteAccount);
         binder.bindInstanceFields(this);
         updateAccount.addClickListener(event -> save(id));
     }

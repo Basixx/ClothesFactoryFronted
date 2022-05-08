@@ -1,4 +1,4 @@
-package com.kodilla.clothesfactory_frontend.form;
+package com.kodilla.clothesfactory_frontend.form.account;
 
 import com.kodilla.clothesfactory_frontend.domain.Cart;
 import com.kodilla.clothesfactory_frontend.domain.Cloth;
