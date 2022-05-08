@@ -75,17 +75,27 @@ public class ClothesClient {
     }
 
     public Cloth createCloth(Cloth newCloth) {
-        return restTemplate.postForObject(
-                url,
-                newCloth,
-                Cloth.class
-        );
+        try {
+            return restTemplate.postForObject(
+                    url,
+                    newCloth,
+                    Cloth.class
+            );
+        } catch (RestClientException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw e;
+        }
     }
 
     public void updateCloth(int clothId, Cloth updatedCloth) {
-        restTemplate.put(
-                url + "/" + clothId,
-                updatedCloth
-        );
+        try {
+            restTemplate.put(
+                    url + "/" + clothId,
+                    updatedCloth
+            );
+        } catch (RestClientException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw e;
+        }
     }
 }

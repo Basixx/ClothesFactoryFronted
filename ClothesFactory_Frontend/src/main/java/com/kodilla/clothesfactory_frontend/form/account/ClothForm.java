@@ -9,9 +9,12 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import org.springframework.web.client.RestClientException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,13 +64,16 @@ public class ClothForm extends FormLayout {
 
     private void save(int userId) {
         Cloth cloth = clothBinder.getBean();
-        Cloth createdCloth = clothService.createCloth(cloth);
-
-        Cart cart = cartService.getCartFromUser(userId);
-        int usersCartId = cart.getId().intValue();
-        cartService.addClothToCart(usersCartId, createdCloth.getId().intValue());
-        cartForm.refreshClothes(userId);
-        setCloth(null);
+        try {
+            Cloth createdCloth = clothService.createCloth(cloth);
+            Cart cart = cartService.getCartFromUser(userId);
+            int usersCartId = cart.getId().intValue();
+            cartService.addClothToCart(usersCartId, createdCloth.getId().intValue());
+            cartForm.refreshClothes(userId);
+            setCloth(null);
+        } catch (RestClientException e) {
+            Notification.show(e.getMessage());
+        }
     }
 
     private void delete(int userId) {
@@ -81,9 +87,15 @@ public class ClothForm extends FormLayout {
 
     private void update(int userId) {
         Cloth cloth = clothBinder.getBean();
-        clothService.updateCloth(cloth.getId().intValue(), cloth);
-        cartForm.refreshClothes(userId);
-        setCloth(null);
+        try {
+            clothService.updateCloth(cloth.getId().intValue(), cloth);
+        } catch (RestClientException e) {
+            Notification.show(e.getMessage());
+        } finally {
+            cartForm.refreshClothes(userId);
+            setCloth(null);
+        }
+
     }
 
     public void setCloth(Cloth cloth) {

@@ -31,7 +31,6 @@ public class OrderService {
         } catch (RestClientException e) {
             throw e;
         }
-
     }
 
     public void setOrderToPaid(int orderId) {
@@ -40,7 +39,6 @@ public class OrderService {
         } catch (RestClientException e) {
             throw e;
         }
-
     }
 
     public void setOrderToSent(int orderId) {
@@ -49,6 +47,5 @@ public class OrderService {
         } catch (RestClientException e) {
             throw e;
         }
-
     }
 }

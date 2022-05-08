@@ -99,6 +99,5 @@ public class OrdersClient {
             LOGGER.error(e.getMessage(), e);
             throw e;
         }
-
     }
 }

@@ -2,6 +2,8 @@ package com.kodilla.clothesfactory_frontend.service;
 
 import com.kodilla.clothesfactory_frontend.configuration.client.ClothesClient;
 import com.kodilla.clothesfactory_frontend.domain.Cloth;
+import org.springframework.web.client.RestClientException;
+
 import java.util.List;
 
 public class ClothService {
@@ -29,9 +31,17 @@ public class ClothService {
     }
 
     public Cloth createCloth(Cloth cloth) {
-        return clothesClient.createCloth(cloth);
+        try {
+            return clothesClient.createCloth(cloth);
+        } catch (RestClientException e) {
+            throw e;
+        }
     }
-    public void updateCloth(int clothId, Cloth cloth) {
-        clothesClient.updateCloth(clothId, cloth);
+    public void updateCloth(int clothId, Cloth cloth) { //todo
+        try {
+            clothesClient.updateCloth(clothId, cloth);
+        } catch (RestClientException e) {
+            throw e;
+        }
     }
 }
