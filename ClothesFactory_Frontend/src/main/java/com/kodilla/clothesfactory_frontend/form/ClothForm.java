@@ -27,7 +27,7 @@ public class ClothForm extends FormLayout {
     public Button delete = new Button("Delete");
     public Button save = new Button("SAVE");
     private final Binder<Cloth> clothBinder = new Binder<>(Cloth.class);
-    private final AccountForm accountForm;
+    private final CartForm cartForm;
     private final ClothService clothService = ClothService.getInstance();
     private final CartService cartService = CartService.getInstance();
     public HorizontalLayout buttons = new HorizontalLayout(add, delete);
@@ -40,8 +40,8 @@ public class ClothForm extends FormLayout {
         quantity.setItems(optionsList);
     }
 
-    public ClothForm(AccountForm accountForm) {
-        this.accountForm = accountForm;
+    public ClothForm(CartForm cartForm, int userId) {
+        this.cartForm = cartForm;
         fashion.setItems(ClothFashion.values());
         color.setItems(ClothColor.values());
         font.setItems(ClothFont.values());
@@ -53,9 +53,9 @@ public class ClothForm extends FormLayout {
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         add(fashion, color, print, font, printColor, size, quantity, buttons);
         clothBinder.bindInstanceFields(this);
-        add.addClickListener(event -> save(accountForm.getUserId()));
-        delete.addClickListener(event -> delete(accountForm.getUserId()));
-        save.addClickListener(event -> update(accountForm.getUserId()));
+        add.addClickListener(event -> save(userId));
+        delete.addClickListener(event -> delete(userId));
+        save.addClickListener(event -> update(userId));
 
     }
 
@@ -66,7 +66,7 @@ public class ClothForm extends FormLayout {
         Cart cart = cartService.getCartFromUser(userId);
         int usersCartId = cart.getId().intValue();
         cartService.addClothToCart(usersCartId, createdCloth.getId().intValue());
-        accountForm.refreshClothes(userId);
+        cartForm.refreshClothes(userId);
         setCloth(null);
     }
 
@@ -75,14 +75,14 @@ public class ClothForm extends FormLayout {
         Cart cart = cartService.getCartFromUser(userId);
         int usersCartId = cart.getId().intValue();
         cartService.deleteClothFromCart(usersCartId, cloth.getId().intValue());
-        accountForm.refreshClothes(userId);
+        cartForm.refreshClothes(userId);
         setCloth(null);
     }
 
     private void update(int userId) {
         Cloth cloth = clothBinder.getBean();
         clothService.updateCloth(cloth.getId().intValue(), cloth);
-        accountForm.refreshClothes(userId);
+        cartForm.refreshClothes(userId);
         setCloth(null);
     }
 
