@@ -31,5 +31,4 @@ public class OrdersForm extends VerticalLayout {
     private void refreshOrders(int userID) {
         orderGrid.setItems(orderService.getOrdersByUser(userID));
     }
-
 }

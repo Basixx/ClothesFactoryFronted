@@ -1,7 +1,6 @@
 package com.kodilla.clothesfactory_frontend.service;
 
 import com.kodilla.clothesfactory_frontend.configuration.client.AdminTokenClient;
-import com.kodilla.clothesfactory_frontend.domain.AdminToken;
 
 public class AdminTokenService {
 

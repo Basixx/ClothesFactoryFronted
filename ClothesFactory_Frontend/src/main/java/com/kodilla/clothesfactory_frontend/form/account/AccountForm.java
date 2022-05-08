@@ -1,6 +1,5 @@
 package com.kodilla.clothesfactory_frontend.form.account;
 
-
 import com.kodilla.clothesfactory_frontend.form.auxiliary.OrdersForm;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;

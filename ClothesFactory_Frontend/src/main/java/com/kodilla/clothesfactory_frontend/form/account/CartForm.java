@@ -10,7 +10,6 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.springframework.web.client.RestClientException;
-
 import java.math.BigDecimal;
 
 public class CartForm extends VerticalLayout {
