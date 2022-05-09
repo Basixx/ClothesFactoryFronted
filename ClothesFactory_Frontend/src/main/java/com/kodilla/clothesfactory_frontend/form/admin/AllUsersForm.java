@@ -12,7 +12,8 @@ public class AllUsersForm extends VerticalLayout {
     private final Grid<User> userGrid = new Grid<>(User.class);
 
     public AllUsersForm() {
-        userGrid.setColumns("name", "surname", "phoneNumber", "emailAddress");
+        userGrid.setColumns("name", "surname", "phoneNumber", "emailAddress", "password",
+                "street", "streetAndApartmentNumber", "city", "postCode");
         add(new Text("All Users:"));
         add(userGrid);
         userGrid.setItems(userService.getAllUsers());

@@ -30,11 +30,28 @@ public class User {
     @JsonProperty("password")
     private String password;
 
-    public User(String name, String surname, String phoneNumber, String emailAddress, String password) {
+    @JsonProperty("street")
+    private String street;
+
+    @JsonProperty("streetAndApartmentNumber")
+    private String streetAndApartmentNumber;
+
+    @JsonProperty("city")
+    private String city;
+
+    @JsonProperty("postCode")
+    private String postCode;
+
+    public User(String name, String surname, String phoneNumber, String emailAddress, String password,
+                String street, String streetAndApartmentNumber, String city, String postCode) {
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.password = password;
+        this.street = street;
+        this.streetAndApartmentNumber = streetAndApartmentNumber;
+        this.city = city;
+        this.postCode = postCode;
     }
 }

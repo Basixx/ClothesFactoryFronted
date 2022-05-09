@@ -1,4 +1,4 @@
-package com.kodilla.clothesfactory_frontend.form.auxiliary;
+package com.kodilla.clothesfactory_frontend.form.account;
 
 import com.kodilla.clothesfactory_frontend.domain.Cloth;
 import com.kodilla.clothesfactory_frontend.domain.Order;
@@ -16,7 +16,7 @@ public class OrdersForm extends VerticalLayout {
     private final Grid<Cloth> clothGrid = new Grid<>(Cloth.class);
 
     public OrdersForm(int userId) {
-        orderGrid.setColumns("orderDate", "totalOrderPrice", "paid", "sent");
+        orderGrid.setColumns("orderDate", "totalOrderPrice", "paid", "sent", "orderShipment");
         add(new Text("My Orders"));
         add(orderGrid);
         refreshOrders(userId);

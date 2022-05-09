@@ -14,6 +14,10 @@ public class UserForm extends VerticalLayout {
     private final TextField surname = new TextField("Surname");
     private final TextField phoneNumber = new TextField("Phone Number");
     private final TextField password = new TextField("Password");
+    private final TextField street = new TextField("Street");
+    private final TextField streetAndApartmentNumber = new TextField("Street and apartment number");
+    private final TextField city = new TextField("City");
+    private final TextField postCode = new TextField("Post code");
     private final UserService userService = UserService.getInstance();
     private final Binder<User> binder = new Binder<>(User.class);
     private final Button updateAccount = new Button("Update Credentials");
@@ -23,7 +27,7 @@ public class UserForm extends VerticalLayout {
     public UserForm(AccountSettingsForm accountSettingsForm, int id) {
         this.accountSettingsFormForm = accountSettingsForm;
         setUser(null);
-        add(name, surname, phoneNumber, password, updateAccount, deleteAccount);
+        add(name, surname, phoneNumber, password, street, streetAndApartmentNumber, city, postCode, updateAccount, deleteAccount);
         binder.bindInstanceFields(this);
         updateAccount.addClickListener(event -> save(id));
     }

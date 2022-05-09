@@ -19,6 +19,10 @@ public class CreateUserForm extends VerticalLayout {
     private final TextField phoneNumber = new TextField("Phone Number");
     private final TextField emailAddress = new TextField("Email Addres");
     private final TextField password = new TextField("Password");
+    private final TextField street = new TextField("Street");
+    private final TextField streetAndApartmentNumber = new TextField("Street and apartment number");
+    private final TextField city = new TextField("City");
+    private final TextField postCode = new TextField("Post code");
     private final UserService userService = UserService.getInstance();
     private final Binder<User> userBinder = new Binder<>(User.class);
     private final Button previousPage = new Button("Previous Page", event -> previous());
@@ -29,11 +33,13 @@ public class CreateUserForm extends VerticalLayout {
         createAccount.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         createAccount.addClickListener(event -> saveUser());
 
-        add(new VerticalLayout(new Text("Create an account"), previousPage, name, surname, phoneNumber, emailAddress, password, createAccount));
+        add(new VerticalLayout(new Text("Create an account"), previousPage,
+                name, surname, phoneNumber, emailAddress, password, street, streetAndApartmentNumber, city, postCode, createAccount));
     }
 
     private void saveUser() {
-        User user = new User(name.getValue(), surname.getValue(), phoneNumber.getValue(), emailAddress.getValue(), password.getValue());
+        User user = new User(name.getValue(), surname.getValue(), phoneNumber.getValue(), emailAddress.getValue(),
+                password.getValue(), street.getValue(), streetAndApartmentNumber.getValue(), city.getValue(), postCode.getValue());
         try {
             User createdUser = userService.createUser(user);
             showAccountForm(createdUser.getId().intValue());

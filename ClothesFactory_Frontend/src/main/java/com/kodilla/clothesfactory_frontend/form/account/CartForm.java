@@ -1,11 +1,14 @@
 package com.kodilla.clothesfactory_frontend.form.account;
 
 import com.kodilla.clothesfactory_frontend.domain.Cloth;
+import com.kodilla.clothesfactory_frontend.domain.Order;
+import com.kodilla.clothesfactory_frontend.form.auxiliary.OrderShipment;
 import com.kodilla.clothesfactory_frontend.service.CartService;
 import com.kodilla.clothesfactory_frontend.service.ClothService;
 import com.kodilla.clothesfactory_frontend.service.OrderService;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -19,6 +22,7 @@ public class CartForm extends VerticalLayout {
     private final Grid<Cloth> clothGrid = new Grid<>(Cloth.class);
     private final Button addNewCloth = new Button("Add new cloth");
     private final Button createOrder = new Button("Create Order");
+    private final ComboBox<OrderShipment> shipmentComboBox = new ComboBox<>("Shipment");
     private BigDecimal totalPrice;
     private final Text price;
 
@@ -28,8 +32,9 @@ public class CartForm extends VerticalLayout {
         totalPrice = (cartService.getCartFromUser(userId).getTotalPrice() == null ? BigDecimal.ZERO : cartService.getCartFromUser(userId).getTotalPrice());
         price = new Text("Total price: " + totalPrice + " PLN");
 
-        clothForm.setCloth(null);
+        shipmentComboBox.setItems(OrderShipment.values());
 
+        clothForm.setCloth(null);
         clothGrid.setColumns("fashion", "color", "print", "font", "printColor", "size", "quantity", "price");
         addNewCloth.addClickListener(e -> {
             clothGrid.asSingleSelect().clear();
@@ -41,7 +46,7 @@ public class CartForm extends VerticalLayout {
         add(new Text("My Cart"));
         add(addNewCloth);
 
-        createOrder.addClickListener(e -> createOrder(userId));
+        createOrder.addClickListener(e -> createOrder(userId, shipmentComboBox.getValue()));
 
         VerticalLayout clothLayout = new VerticalLayout(clothGrid, price);
         add(clothLayout);
@@ -54,13 +59,16 @@ public class CartForm extends VerticalLayout {
             clothForm.buttons.add(clothForm.save);
         });
         add(new CurrencyForm(totalPrice));
+        add(shipmentComboBox);
+        add(new Text("Fedex: 10 PLN / / DHL: 15 PLN / / UPS: 20 / / InPost: 12"));
         add(createOrder);
     }
 
 
-    private void createOrder(int userID) {
+    private void createOrder(int userID, OrderShipment orderShipment) {
         try {
-            orderService.createOrder(userID);
+            orderService.createOrder(userID, orderShipment);
+            shipmentComboBox.getGenericDataView();
         } catch (RestClientException e) {
             Notification.show(e.getMessage());
         } finally {

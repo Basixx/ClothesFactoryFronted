@@ -1,6 +1,7 @@
 package com.kodilla.clothesfactory_frontend.configuration.client;
 
 import com.kodilla.clothesfactory_frontend.domain.Order;
+import com.kodilla.clothesfactory_frontend.form.auxiliary.OrderShipment;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,9 +69,9 @@ public class OrdersClient {
         }
     }
 
-    public void createOrder(int userId) {
+    public void createOrder(int userId, OrderShipment orderShipment) {
         try {
-            restTemplate.postForObject(url + "/" + userId, userId, Order.class);
+            restTemplate.postForObject(url + "/" + userId + "/" + orderShipment, userId, Order.class);
         } catch (RestClientException e) {
             throw e;
         }
