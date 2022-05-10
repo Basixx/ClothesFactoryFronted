@@ -9,6 +9,7 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import org.springframework.web.client.RestClientException;
 
 public class LoginForm extends FormLayout {
     private final TextField emailAddress = new TextField("Email Address");
@@ -28,11 +29,11 @@ public class LoginForm extends FormLayout {
     }
 
     private void authenticateUser(String email, String password) {
-        User existingUser = userService.authenticateUser(email, password);
-        if(existingUser != null){
+        try {
+            User existingUser = userService.authenticateUser(email, password);
             showAccountForm(existingUser.getId().intValue());
-        } else {
-            Notification.show("Wrong credentials.");
+        } catch (RestClientException e) {
+            Notification.show(e.getMessage());
         }
     }
 
