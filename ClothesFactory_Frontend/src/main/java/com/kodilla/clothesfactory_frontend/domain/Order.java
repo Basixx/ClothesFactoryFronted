@@ -31,4 +31,7 @@ public class Order {
 
     @JsonProperty("sent")
     private boolean sent;
+
+    @JsonProperty("address")
+    private String address;
 }
