@@ -5,6 +5,8 @@ import com.kodilla.clothesfactory_frontend.domain.Cloth;
 import com.kodilla.clothesfactory_frontend.form.auxiliary.*;
 import com.kodilla.clothesfactory_frontend.service.CartService;
 import com.kodilla.clothesfactory_frontend.service.ClothService;
+import com.kodilla.clothesfactory_frontend.service.KanyeQuoteService;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -29,10 +31,15 @@ public class ClothForm extends FormLayout {
     public Button add = new Button("Add");
     public Button delete = new Button("Delete");
     public Button save = new Button("SAVE");
+    public Button kanyeQuoteButton = new Button("Get Quote", e -> showKanyeQuote());
+    public Text kanyeExplain = new Text("No idea for your print? Get an inspiration from a random Kanye West quote!");
+    public Text kanyeQuote = new Text("");
     private final Binder<Cloth> clothBinder = new Binder<>(Cloth.class);
     private final ClothService clothService = ClothService.getInstance();
     private final CartService cartService = CartService.getInstance();
+    private final KanyeQuoteService kanyeQuoteService = KanyeQuoteService.getInstance();
     public HorizontalLayout buttons = new HorizontalLayout(add, delete);
+    public HorizontalLayout kanye = new HorizontalLayout(kanyeQuoteButton, kanyeQuote);
 
     private void setQuantityComboBox () {
         List<Integer> optionsList = new ArrayList<>();
@@ -53,7 +60,7 @@ public class ClothForm extends FormLayout {
 
         add.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        add(fashion, color, print, font, printColor, size, quantity, buttons);
+        add(fashion, color, print, font, printColor, size, quantity, buttons, kanyeExplain, kanye);
         clothBinder.bindInstanceFields(this);
         add.addClickListener(event -> save(userId));
         delete.addClickListener(event -> delete(userId));
@@ -106,5 +113,10 @@ public class ClothForm extends FormLayout {
             setVisible(true);
             fashion.focus();
         }
+    }
+
+    private void showKanyeQuote() {
+        String quote = kanyeQuoteService.getQuote();
+        kanyeQuote.setText(quote);
     }
 }
