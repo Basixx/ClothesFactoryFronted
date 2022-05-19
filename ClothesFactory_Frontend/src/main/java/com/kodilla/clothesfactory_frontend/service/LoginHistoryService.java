@@ -2,7 +2,6 @@ package com.kodilla.clothesfactory_frontend.service;
 
 import com.kodilla.clothesfactory_frontend.configuration.client.LoginHistoryClient;
 import com.kodilla.clothesfactory_frontend.domain.LoginHistory;
-
 import java.util.List;
 
 public class LoginHistoryService {
@@ -18,6 +17,6 @@ public class LoginHistoryService {
     }
 
     public List<LoginHistory> getLoginHistory() {
-        return loginHistoryClient.getAllLoginHistory();
+        return loginHistoryClient.getLoginHistory();
     }
 }

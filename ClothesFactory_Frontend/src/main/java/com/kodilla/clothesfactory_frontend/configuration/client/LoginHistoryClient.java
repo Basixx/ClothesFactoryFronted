@@ -26,7 +26,7 @@ public class LoginHistoryClient {
         return loginHistoryClient;
     }
 
-    public List<LoginHistory> getAllLoginHistory() {
+    public List<LoginHistory> getLoginHistory() {
         try {
             LoginHistory[] loginHistoryResponse = restTemplate.getForObject(
                     url,

@@ -12,16 +12,17 @@ import com.vaadin.flow.component.textfield.TextField;
 public class AdminForm extends VerticalLayout {
 
     private final AdminTokenService adminTokenService = AdminTokenService.getInstance();
-    private final Button submit = new Button("SUBMIT", event-> authenticateAdmin());
+    private final Button submit = new Button("SUBMIT", e-> authenticateAdmin());
     private final Button clothes = new Button("Show All Clothes", e -> showClothes());
     private final Button orders = new Button("Show All Orders", e -> showOrders());
     private final Button users = new Button("Show All Users", e  -> showUsers());
     private final Button loginHistory = new Button("Show Login History", e -> showLoginHistory());
-    private final Button previousPage = new Button("Previous Page", event -> previous());
-    private final Button token = new Button("Generate Token", event -> generateToken());
-    private final Button logOut = new Button("Log Out", event -> logout());
+    private final Button paymentHistory = new Button("Show Payment History", e -> showPaymentHistory());
+    private final Button previousPage = new Button("Previous Page", e -> previous());
+    private final Button token = new Button("Generate Token", e -> generateToken());
+    private final Button logOut = new Button("Log Out", e -> logout());
     private final TextField authentication = new TextField("AUTHENTICATION");
-    private final HorizontalLayout toolbar = new HorizontalLayout(clothes, orders, users, loginHistory, logOut);
+    private final HorizontalLayout toolbar = new HorizontalLayout(clothes, orders, users, loginHistory, paymentHistory, logOut);
     private final VerticalLayout view = new VerticalLayout(new Text("ADMIN"), toolbar);
     public AdminForm() {
         add(new VerticalLayout(new Text("ADMIN"), previousPage, token, authentication, submit));
@@ -50,6 +51,11 @@ public class AdminForm extends VerticalLayout {
     private void showLoginHistory() {
         showAdminView();
         add(new LoginHistoryForm());
+    }
+
+    private void showPaymentHistory() {
+        showAdminView();
+        add(new PaymentHistoryForm());
     }
 
     private void authenticateAdmin() {
