@@ -2,7 +2,6 @@ package com.kodilla.clothesfactory_frontend.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.kodilla.clothesfactory_frontend.form.auxiliary.OrderShipment;
 import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -23,15 +22,23 @@ public class Order {
     @JsonProperty("totalOrderPrice")
     private BigDecimal totalOrderPrice;
 
-    @JsonProperty("shipment")
-    private OrderShipment orderShipment;
-
     @JsonProperty("paid")
     private boolean paid;
 
     @JsonProperty("sent")
     private boolean sent;
 
+    @JsonProperty("shipmentCompanyName")
+    private String shipmentCompanyName;
+
+    @JsonProperty("shippingPrice")
+    private BigDecimal shippingPrice;
+
+    @JsonProperty("deliveryDays")
+    private int deliveryDays;
+
+
     @JsonProperty("address")
     private String address;
+
 }
