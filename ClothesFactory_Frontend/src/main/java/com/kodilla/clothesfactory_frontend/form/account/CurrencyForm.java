@@ -17,29 +17,33 @@ public class CurrencyForm extends VerticalLayout {
     private final Button dollar = new Button("USD");
     private final Button pound = new Button("GBP");
 
-    public CurrencyForm(BigDecimal totalPrice) {
-        euro.addClickListener(event -> showEuro(totalPrice, price));
-        dollar.addClickListener(event -> showDollar(totalPrice, price));
-        pound.addClickListener(event -> showPound(totalPrice, price));
+    public CurrencyForm(CartForm cartForm) {
+        euro.addClickListener(event -> showEuro(cartForm.getTotalPrice()));
+        dollar.addClickListener(event -> showDollar(cartForm.getTotalPrice()));
+        pound.addClickListener(event -> showPound(cartForm.getTotalPrice()));
         HorizontalLayout buttons = new HorizontalLayout(euro, dollar, pound);
         add(buttons, price);
     }
 
-    private void showEuro(BigDecimal totalPrice, Text price) {
+    private void showEuro(BigDecimal totalPrice) {
         exchangeRate = exchangeRateService.getExchange("EUR", "PLN");
         currencyTotalPrice = totalPrice.multiply(exchangeRate.getCurrencyRate());
         price.setText("Price in EUR: " + currencyTotalPrice.doubleValue() + " EUR");
     }
 
-    private void showDollar(BigDecimal totalPrice, Text price) {
+    private void showDollar(BigDecimal totalPrice) {
         exchangeRate = exchangeRateService.getExchange("USD", "PLN");
         currencyTotalPrice = totalPrice.multiply(exchangeRate.getCurrencyRate());
         price.setText("Price in USD: " + currencyTotalPrice.doubleValue() + " USD");
     }
 
-    private void showPound(BigDecimal totalPrice, Text price) {
+    private void showPound(BigDecimal totalPrice) {
         exchangeRate = exchangeRateService.getExchange("GBP", "PLN");
         currencyTotalPrice = totalPrice.multiply(exchangeRate.getCurrencyRate());
         price.setText("Price in GBP: " + currencyTotalPrice.doubleValue() + " GBP");
+    }
+
+    public void clearCurrency() {
+        price.setText("");
     }
 }

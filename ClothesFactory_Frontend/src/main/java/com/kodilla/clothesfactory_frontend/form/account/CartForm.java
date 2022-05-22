@@ -25,6 +25,7 @@ public class CartForm extends VerticalLayout {
     private final ComboBox<OrderShipment> shipmentComboBox = new ComboBox<>("Shipment");
     private BigDecimal totalPrice;
     private final Text price;
+    private final CurrencyForm currencyForm = new CurrencyForm(this);
 
     public CartForm(int userId) {
         ClothForm clothForm = new ClothForm(this, userId);
@@ -58,7 +59,7 @@ public class CartForm extends VerticalLayout {
             clothForm.buttons.remove(clothForm.add);
             clothForm.buttons.add(clothForm.save);
         });
-        add(new CurrencyForm(totalPrice));
+        add(currencyForm);
         add(shipmentComboBox);
         add(new Text("Fedex: 10 PLN / / DHL: 15 PLN / / UPS: 20 / / InPost: 12"));
         add(createOrder);
@@ -80,6 +81,10 @@ public class CartForm extends VerticalLayout {
         clothGrid.setItems(clothService.getClothesFromUserCart(userID));
         totalPrice = cartService.getCartFromUser(userID).getTotalPrice();
         price.setText("Total price: " + totalPrice);
-        //todo rozwiązać problem z odświeżaniem walut np currency set text
+        currencyForm.clearCurrency();
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
     }
 }
