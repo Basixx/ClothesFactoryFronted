@@ -16,7 +16,7 @@ public class OrdersForm extends VerticalLayout {
     private final Grid<Cloth> clothGrid = new Grid<>(Cloth.class);
 
     public OrdersForm(int userId) {
-        orderGrid.setColumns("orderDate", "totalOrderPrice", "paid", "sent", "shipmentCompanyName", "shippingPrice", "deliveryDays", "address");
+        orderGrid.setColumns("id", "orderDate", "totalOrderPrice", "paid", "sent", "shipmentCompanyName", "shippingPrice", "deliveryDays", "address");
         add(new Text("My Orders"));
         add(orderGrid);
         refreshOrders(userId);

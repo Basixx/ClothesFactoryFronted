@@ -24,7 +24,7 @@ public class AllOrdersForm extends VerticalLayout {
     private final Button setToSent = new Button("SENT", e -> setOrderToSent());
 
     public AllOrdersForm() {
-        orderGrid.setColumns("id", "orderDate", "totalOrderPrice", "paid", "sent", "shipmentCompanyName", "shippingPrice", "deliveryDays", "address");
+        orderGrid.setColumns("id", "orderDate", "userMail", "totalOrderPrice", "paid", "sent", "shipmentCompanyName", "shippingPrice", "deliveryDays", "address");
         add(new Text("All Orders:"));
         add(orderGrid);
         refreshAllOrders();

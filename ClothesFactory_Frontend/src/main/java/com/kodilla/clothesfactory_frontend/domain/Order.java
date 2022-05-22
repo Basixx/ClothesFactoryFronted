@@ -22,6 +22,9 @@ public class Order {
     @JsonProperty("totalOrderPrice")
     private BigDecimal totalOrderPrice;
 
+    @JsonProperty("userMail")
+    private String userMail;
+
     @JsonProperty("paid")
     private boolean paid;
 

@@ -27,6 +27,7 @@ public class AllUsersForm extends VerticalLayout {
                 return;
             }
             int userId = userGrid.asSingleSelect().getValue().getId().intValue();
+            orderGrid.setColumns("id", "orderDate", "totalOrderPrice", "shipmentCompanyName", "shippingPrice", "deliveryDays");
             orderGrid.setItems(orderService.getOrdersByUser(userId));
             add(orderGrid);
         });
