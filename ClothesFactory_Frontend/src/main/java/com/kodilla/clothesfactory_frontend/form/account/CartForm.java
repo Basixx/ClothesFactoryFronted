@@ -1,7 +1,6 @@
 package com.kodilla.clothesfactory_frontend.form.account;
 
 import com.kodilla.clothesfactory_frontend.domain.Cloth;
-import com.kodilla.clothesfactory_frontend.domain.Order;
 import com.kodilla.clothesfactory_frontend.form.auxiliary.OrderShipment;
 import com.kodilla.clothesfactory_frontend.service.CartService;
 import com.kodilla.clothesfactory_frontend.service.ClothService;
@@ -31,9 +30,10 @@ public class CartForm extends VerticalLayout {
         ClothForm clothForm = new ClothForm(this, userId);
 
         totalPrice = (cartService.getCartFromUser(userId).getTotalPrice() == null ? BigDecimal.ZERO : cartService.getCartFromUser(userId).getTotalPrice());
-        price = new Text("Total price: " + totalPrice + " PLN");
+        price = new Text("");
 
         shipmentComboBox.setItems(OrderShipment.values());
+        shipmentComboBox.setValue(OrderShipment.FEDEX);
 
         clothForm.setCloth(null);
         clothGrid.setColumns("fashion", "color", "print", "font", "printColor", "size", "quantity", "price");
@@ -61,10 +61,9 @@ public class CartForm extends VerticalLayout {
         });
         add(currencyForm);
         add(shipmentComboBox);
-        add(new Text("Fedex: 10 PLN / / DHL: 15 PLN / / UPS: 20 / / InPost: 12"));
+        add(new Text("Fedex: 10 PLN / / DHL: 15 PLN / / UPS: 20 PLN / / InPost: 12 PLN"));
         add(createOrder);
     }
-
 
     private void createOrder(int userID, OrderShipment orderShipment) {
         try {
@@ -80,7 +79,7 @@ public class CartForm extends VerticalLayout {
     public void refreshClothes(int userID) {
         clothGrid.setItems(clothService.getClothesFromUserCart(userID));
         totalPrice = cartService.getCartFromUser(userID).getTotalPrice();
-        price.setText("Total price: " + totalPrice);
+        price.setText("Total price: " + totalPrice + " PLN");
         currencyForm.clearCurrency();
     }
 

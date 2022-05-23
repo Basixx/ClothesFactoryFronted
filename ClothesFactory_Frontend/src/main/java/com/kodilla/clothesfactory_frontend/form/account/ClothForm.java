@@ -65,7 +65,6 @@ public class ClothForm extends FormLayout {
         add.addClickListener(event -> save(userId));
         delete.addClickListener(event -> delete(userId));
         save.addClickListener(event -> update(userId));
-
     }
 
     private void save(int userId) {
@@ -101,7 +100,6 @@ public class ClothForm extends FormLayout {
             cartForm.refreshClothes(userId);
             setCloth(null);
         }
-
     }
 
     public void setCloth(Cloth cloth) {
