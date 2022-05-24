@@ -17,7 +17,6 @@ public class AccountSettingsForm extends VerticalLayout {
         refreshUser(userId);
         add(new Text("Account Settings"), userGrid, userForm);
         userGrid.asSingleSelect().addValueChangeListener(event -> userForm.setUser(userGrid.asSingleSelect().getValue()));
-
     }
 
     public void refreshUser(int userID) {

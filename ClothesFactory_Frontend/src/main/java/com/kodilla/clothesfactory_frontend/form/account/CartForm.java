@@ -31,9 +31,7 @@ public class CartForm extends VerticalLayout {
 
         totalPrice = (cartService.getCartFromUser(userId).getTotalPrice() == null ? BigDecimal.ZERO : cartService.getCartFromUser(userId).getTotalPrice());
         price = new Text("");
-
         shipmentComboBox.setItems(OrderShipment.values());
-        shipmentComboBox.setValue(OrderShipment.FEDEX);
 
         clothForm.setCloth(null);
         clothGrid.setColumns("fashion", "color", "print", "font", "printColor", "size", "quantity", "price");
@@ -66,13 +64,17 @@ public class CartForm extends VerticalLayout {
     }
 
     private void createOrder(int userID, OrderShipment orderShipment) {
-        try {
-            orderService.createOrder(userID, orderShipment);
-            shipmentComboBox.getGenericDataView();
-        } catch (RestClientException e) {
-            Notification.show(e.getMessage());
-        } finally {
-            refreshClothes(userID);
+        if(shipmentComboBox.getValue() == null) {
+            Notification.show("Please provide shipment company to create an order.");
+        } else {
+            try {
+                orderService.createOrder(userID, orderShipment);
+                shipmentComboBox.getGenericDataView();
+            } catch (RestClientException e) {
+                Notification.show(e.getMessage());
+            } finally {
+                refreshClothes(userID);
+            }
         }
     }
 

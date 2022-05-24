@@ -67,11 +67,13 @@ public class AdminForm extends VerticalLayout {
     private void authenticateAdmin() {
         String token = authentication.getValue();
 
-        if(adminTokenService.existsToken(token)) {
+        if(authentication.getValue().equals("")) {
+            Notification.show("Please provide token.");
+        } else if(adminTokenService.existsToken(token)) {
             showAdminView();
             adminTokenService.deleteTokens();
         } else {
-            Notification.show("Token does not exist");
+            Notification.show("Token does not exist.");
         }
     }
 

@@ -7,6 +7,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.component.notification.Notification;
 
 public class UserForm extends VerticalLayout {
     private final AccountSettingsForm accountSettingsFormForm;
@@ -33,10 +34,16 @@ public class UserForm extends VerticalLayout {
     }
 
     private void save(int userId) {
-        User user = binder.getBean();
-        userService.updateUser(userId, user);
-        accountSettingsFormForm.refreshUser(userId);
-        setUser(null);
+        if(name.getValue().equals("") || surname.getValue().equals("") || phoneNumber.getValue().equals("") ||
+                password.getValue().equals("") || street.getValue().equals("") ||
+                streetAndApartmentNumber.getValue().equals("") || city.getValue().equals("") || postCode.getValue().equals("")) {
+            Notification.show("Please provide all the data to update user credentials.");
+        } else {
+            User user = binder.getBean();
+            userService.updateUser(userId, user);
+            accountSettingsFormForm.refreshUser(userId);
+            setUser(null);
+        }
     }
 
     private void delete() {

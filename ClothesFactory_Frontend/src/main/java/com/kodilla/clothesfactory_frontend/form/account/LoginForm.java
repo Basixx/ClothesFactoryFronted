@@ -29,11 +29,15 @@ public class LoginForm extends FormLayout {
     }
 
     private void authenticateUser(String email, String password) {
-        try {
-            User existingUser = userService.authenticateUser(email, password);
-            showAccountForm(existingUser.getId().intValue());
-        } catch (RestClientException e) {
-            Notification.show(e.getMessage());
+        if(email.equals("") || password.equals("")){
+            Notification.show("Please provide all the data to log in.");
+        } else {
+            try {
+                User existingUser = userService.authenticateUser(email, password);
+                showAccountForm(existingUser.getId().intValue());
+            } catch (RestClientException e) {
+                Notification.show(e.getMessage());
+            }
         }
     }
 

@@ -68,16 +68,20 @@ public class ClothForm extends FormLayout {
     }
 
     private void save(int userId) {
-        Cloth cloth = clothBinder.getBean();
-        try {
-            Cloth createdCloth = clothService.createCloth(cloth);
-            Cart cart = cartService.getCartFromUser(userId);
-            int usersCartId = cart.getId().intValue();
-            cartService.addClothToCart(usersCartId, createdCloth.getId().intValue());
-            cartForm.refreshClothes(userId);
-            setCloth(null);
-        } catch (RestClientException e) {
-            Notification.show(e.getMessage());
+        if(fashion.getValue() == null || color.getValue() == null || print.getValue().equals("") || font.getValue() == null || printColor.getValue() == null || size.getValue() ==null) {
+            Notification.show("Please provide all the data to create cloth.");
+        } else {
+            Cloth cloth = clothBinder.getBean();
+            try {
+                Cloth createdCloth = clothService.createCloth(cloth);
+                Cart cart = cartService.getCartFromUser(userId);
+                int usersCartId = cart.getId().intValue();
+                cartService.addClothToCart(usersCartId, createdCloth.getId().intValue());
+                cartForm.refreshClothes(userId);
+                setCloth(null);
+            } catch (RestClientException e) {
+                Notification.show(e.getMessage());
+            }
         }
     }
 
