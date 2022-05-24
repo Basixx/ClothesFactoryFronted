@@ -9,11 +9,9 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.binder.Binder;
 import org.springframework.web.client.RestClientException;
 
 public class CreateUserForm extends VerticalLayout {
-
     private final TextField name = new TextField("Name");
     private final TextField surname = new TextField("Surname");
     private final TextField phoneNumber = new TextField("Phone Number");
@@ -24,11 +22,9 @@ public class CreateUserForm extends VerticalLayout {
     private final TextField city = new TextField("City");
     private final TextField postCode = new TextField("Post code");
     private final UserService userService = UserService.getInstance();
-    private final Binder<User> userBinder = new Binder<>(User.class);
     private final Button previousPage = new Button("Previous Page", event -> previous());
 
     public CreateUserForm() {
-        userBinder.bindInstanceFields(this);
         Button createAccount = new Button("Create Account");
         createAccount.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         createAccount.addClickListener(event -> saveUser());
@@ -38,15 +34,19 @@ public class CreateUserForm extends VerticalLayout {
     }
 
     private void saveUser() {
-        User user = new User(name.getValue(), surname.getValue(), phoneNumber.getValue(), emailAddress.getValue(),
-                password.getValue(), street.getValue(), streetAndApartmentNumber.getValue(), city.getValue(), postCode.getValue());
-        try {
-            User createdUser = userService.createUser(user);
-            showAccountForm(createdUser.getId().intValue());
-        } catch (RestClientException e) {
-            Notification.show(e.getMessage());
+        if(name.getValue().equals("") || surname.getValue().equals("") || phoneNumber.getValue().equals("") || emailAddress.getValue().equals("") ||
+                password.getValue().equals("") || street.getValue().equals("") || streetAndApartmentNumber.getValue().equals("") || city.getValue().equals("") || postCode.getValue().equals("")) {
+            Notification.show("Please provide all the data to create an account");
+        } else {
+            User user = new User(name.getValue(), surname.getValue(), phoneNumber.getValue(), emailAddress.getValue(),
+                    password.getValue(), street.getValue(), streetAndApartmentNumber.getValue(), city.getValue(), postCode.getValue());
+            try {
+                User createdUser = userService.createUser(user);
+                showAccountForm(createdUser.getId().intValue());
+            } catch (RestClientException e) {
+                Notification.show(e.getMessage());
+            }
         }
-
     }
 
     private void showAccountForm(int userId) {
