@@ -17,7 +17,7 @@ public class PaymentHistoryClient {
     private final RestTemplate restTemplate;
     private static PaymentHistoryClient paymentHistoryClient;
     private static final Logger LOGGER = LoggerFactory.getLogger(PaymentHistoryClient.class);
-    private final String url = "http://localhost:8080/v1/paymentHistory";
+    private final static String URL = "http://localhost:8080/v1/paymentHistory";
 
     public static PaymentHistoryClient getInstance() {
         if(paymentHistoryClient == null) {
@@ -29,7 +29,7 @@ public class PaymentHistoryClient {
     public List<PaymentHistory> getPaymentHistory() {
         try {
             PaymentHistory[] paymentHistoryResponse = restTemplate.getForObject(
-                    url,
+                    URL,
                     PaymentHistory[].class
             );
             return Optional.ofNullable(paymentHistoryResponse)

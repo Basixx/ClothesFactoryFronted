@@ -23,20 +23,12 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        try {
-            return usersClient.createUser(user);
-        } catch (RestClientException e) {
-            throw e;
-        }
+        return usersClient.createUser(user);
 
     }
 
     public User authenticateUser(String email, String password) {
-        try{
-            return usersClient.authenticateUser(email, password);
-        } catch (RestClientException e){
-            throw e;
-        }
+        return usersClient.authenticateUser(email, password);
     }
 
     public User getUser(int userId) {

@@ -17,7 +17,7 @@ public class ShipmentHistoryClient {
     private final RestTemplate restTemplate;
     private static ShipmentHistoryClient shipmentHistoryClient;
     private static final Logger LOGGER = LoggerFactory.getLogger(ShipmentHistoryClient.class);
-    private final String url = "http://localhost:8080/v1/shipmentHistory";
+    private final static String URL = "http://localhost:8080/v1/shipmentHistory";
 
     public static ShipmentHistoryClient getInstance() {
         if(shipmentHistoryClient == null) {
@@ -29,7 +29,7 @@ public class ShipmentHistoryClient {
     public List<ShipmentHistory> getShipmentHistory() {
         try {
             ShipmentHistory[] shipmentHistoryResponse = restTemplate.getForObject(
-                    url,
+                    URL,
                     ShipmentHistory[].class
             );
             return Optional.ofNullable(shipmentHistoryResponse)

@@ -2,7 +2,6 @@ package com.kodilla.clothesfactory_frontend.service;
 
 import com.kodilla.clothesfactory_frontend.configuration.client.ShipmentHistoryClient;
 import com.kodilla.clothesfactory_frontend.domain.ShipmentHistory;
-
 import java.util.List;
 
 public class ShipmentHistoryService {

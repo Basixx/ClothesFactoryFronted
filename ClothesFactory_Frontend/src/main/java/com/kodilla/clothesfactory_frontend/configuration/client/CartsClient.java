@@ -12,7 +12,7 @@ public class CartsClient {
     private final RestTemplate restTemplate;
     private static CartsClient cartsClient;
     private static final Logger LOGGER = LoggerFactory.getLogger(CartsClient.class);
-    private final String url = "http://localhost:8080/v1/carts";
+    private final static String URL = "http://localhost:8080/v1/carts";
 
     public static CartsClient getInstance() {
         if (cartsClient == null) {
@@ -24,7 +24,7 @@ public class CartsClient {
     public Cart getCartFromUser(int userId) {
         try {
             return restTemplate.getForObject(
-                    url + "/" + userId,
+                    URL + "/" + userId,
                     Cart.class
             );
         } catch (RestClientException e) {
@@ -35,14 +35,14 @@ public class CartsClient {
 
     public void addClothToCart(int cartId, int clothId) {
         restTemplate.put(
-                url + "/addCloth/" +  cartId + "/" + clothId,
+                URL + "/addCloth/" +  cartId + "/" + clothId,
                 Cart.class
         );
     }
 
     public void deleteClothFromCart(int cartId, int clothId) {
         restTemplate.put(
-                url + "/" + cartId + "/" + clothId,
+                URL + "/" + cartId + "/" + clothId,
                 Cart.class
         );
     }

@@ -17,7 +17,7 @@ public class ClothesClient {
     private final RestTemplate restTemplate;
     private static ClothesClient clothesClient;
     private static final Logger LOGGER = LoggerFactory.getLogger(ClothesClient.class);
-    private final String url = "http://localhost:8080/v1/clothes";
+    private final static String URL = "http://localhost:8080/v1/clothes";
 
     public static ClothesClient getInstance() {
         if (clothesClient == null) {
@@ -29,7 +29,7 @@ public class ClothesClient {
     public List<Cloth> getAllClothes() {
         try {
             Cloth[] clothesResponse = restTemplate.getForObject(
-                    url,
+                    URL,
                     Cloth[].class
             );
             return Optional.ofNullable(clothesResponse)
@@ -45,7 +45,7 @@ public class ClothesClient {
     public List<Cloth> getClothesFromUserCart(int userId) {
         try {
             Cloth[] clothesResponse = restTemplate.getForObject(
-                    url + "/fromUserCart/" + userId,
+                    URL + "/fromUserCart/" + userId,
                     Cloth[].class
             );
             return Optional.ofNullable(clothesResponse)
@@ -61,7 +61,7 @@ public class ClothesClient {
     public List<Cloth> getClothesFromOrder(int orderId) {
         try {
             Cloth[] clothesResponse = restTemplate.getForObject(
-                    url + "/fromOrder/" + orderId,
+                    URL + "/fromOrder/" + orderId,
                     Cloth[].class
             );
             return Optional.ofNullable(clothesResponse)
@@ -77,7 +77,7 @@ public class ClothesClient {
     public Cloth createCloth(Cloth newCloth) {
         try {
             return restTemplate.postForObject(
-                    url,
+                    URL,
                     newCloth,
                     Cloth.class
             );
@@ -90,7 +90,7 @@ public class ClothesClient {
     public void updateCloth(int clothId, Cloth updatedCloth) {
         try {
             restTemplate.put(
-                    url + "/" + clothId,
+                    URL + "/" + clothId,
                     updatedCloth
             );
         } catch (RestClientException e) {

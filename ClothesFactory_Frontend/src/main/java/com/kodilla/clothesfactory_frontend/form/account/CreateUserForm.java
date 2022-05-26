@@ -15,7 +15,7 @@ public class CreateUserForm extends VerticalLayout {
     private final TextField name = new TextField("Name");
     private final TextField surname = new TextField("Surname");
     private final TextField phoneNumber = new TextField("Phone Number");
-    private final TextField emailAddress = new TextField("Email Addres");
+    private final TextField emailAddress = new TextField("Email Address");
     private final TextField password = new TextField("Password");
     private final TextField street = new TextField("Street");
     private final TextField streetAndApartmentNumber = new TextField("Street and apartment number");

@@ -17,7 +17,7 @@ public class UsersClient {
     private final RestTemplate restTemplate;
     private static UsersClient usersClient;
     private static final Logger LOGGER = LoggerFactory.getLogger(UsersClient.class);
-    private final String url = "http://localhost:8080/v1/users";
+    private final static String URL = "http://localhost:8080/v1/users";
 
     public static UsersClient getInstance() {
         if (usersClient == null) {
@@ -29,7 +29,7 @@ public class UsersClient {
     public List<User> getAllUsers() {
         try {
             User[] usersResponse = restTemplate.getForObject(
-                    url,
+                    URL,
                     User[].class
             );
             return Optional.ofNullable(usersResponse)
@@ -44,7 +44,7 @@ public class UsersClient {
     public User getUser(int userId) {
         try {
             return restTemplate.getForObject(
-                    url + "/" + userId,
+                    URL + "/" + userId,
                     User.class
             );
         } catch (RestClientException e) {
@@ -56,7 +56,7 @@ public class UsersClient {
     public User authenticateUser(String email, String password) {
         try {
             return restTemplate.getForObject(
-                    url + "/" + email + "/" + password,
+                    URL + "/" + email + "/" + password,
                     User.class
             );
         } catch (RestClientException e) {
@@ -66,26 +66,22 @@ public class UsersClient {
     }
 
     public User createUser(User newUser) {
-        try{
-            return restTemplate.postForObject(
-                    url,
-                    newUser,
-                    User.class
-            );
-        } catch (RestClientException e) {
-            throw e;
-        }
+        return restTemplate.postForObject(
+                URL,
+                newUser,
+                User.class
+        );
 
     }
 
     public void updateUser(int userId, User updatedUser) {
         restTemplate.put(
-                url + "/ " + userId,
+                URL + "/ " + userId,
                 updatedUser
         );
     }
 
     public void deleteUser(int userId) {
-        restTemplate.delete(url + "/" + userId);
+        restTemplate.delete(URL + "/" + userId);
     }
 }

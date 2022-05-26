@@ -13,7 +13,7 @@ public class KanyeQuoteClient {
     private final RestTemplate restTemplate;
     private static KanyeQuoteClient kanyeQuoteClient;
     private static final Logger LOGGER = LoggerFactory.getLogger(KanyeQuoteClient.class);
-    private final String url = "http://localhost:8080/v1/kanye";
+    private final static String URL = "http://localhost:8080/v1/kanye";
 
     public static KanyeQuoteClient getInstance() {
         if(kanyeQuoteClient == null) {
@@ -24,11 +24,10 @@ public class KanyeQuoteClient {
 
     public KanyeQuote getKanyeQuote() {
         try{
-            KanyeQuote kanyeQuoteResponse = restTemplate.getForObject(
-                    url,
+            return restTemplate.getForObject(
+                    URL,
                     KanyeQuote.class
             );
-            return kanyeQuoteResponse;
         } catch (RestClientException e) {
             LOGGER.error(e.getMessage(), e);
             return null;

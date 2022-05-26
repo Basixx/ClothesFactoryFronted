@@ -16,7 +16,7 @@ public class ExchangeRateClient {
     private static ExchangeRateClient exchangeRateClient;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeRateClient.class);
-    private final String url = "http://localhost:8080/v1/exchange";
+    private final static String URL = "http://localhost:8080/v1/exchange";
 
     public static ExchangeRateClient getInstance() {
         if(exchangeRateClient == null) {
@@ -27,7 +27,7 @@ public class ExchangeRateClient {
 
     public ExchangeRate getExchangeRates(String from, String to) {
 
-        URI uri = UriComponentsBuilder.fromHttpUrl(url)
+        URI uri = UriComponentsBuilder.fromHttpUrl(URL)
                 .queryParam("from", from)
                 .queryParam("to", to)
                 .build()

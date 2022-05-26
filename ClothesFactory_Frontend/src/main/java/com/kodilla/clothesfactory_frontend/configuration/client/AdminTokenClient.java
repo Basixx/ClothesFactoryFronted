@@ -13,7 +13,7 @@ public class AdminTokenClient {
     private static AdminTokenClient adminTokenClient;
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminTokenClient.class);
 
-    private final String url = "http://localhost:8080/v1/token";
+    private static final String URL = "http://localhost:8080/v1/token";
 
     public static AdminTokenClient getInstance() {
         if (adminTokenClient == null) {
@@ -25,7 +25,7 @@ public class AdminTokenClient {
     public Boolean existsToken(String token) {
         try {
             return restTemplate.getForObject(
-                    url + "/" + token,
+                    URL + "/" + token,
                     Boolean.class
             );
         } catch (RestClientException e) {
@@ -36,13 +36,13 @@ public class AdminTokenClient {
 
     public void createToken() {
         restTemplate.postForObject(
-                url,
+                URL,
                 null,
                 AdminToken.class
         );
     }
 
     public void deleteTokens() {
-        restTemplate.delete(url);
+        restTemplate.delete(URL);
     }
 }
