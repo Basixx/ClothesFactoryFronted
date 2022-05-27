@@ -21,7 +21,7 @@ public class CartsClient {
         return cartsClient;
     }
 
-    public Cart getCartFromUser(int userId) {
+    public Cart getUserCart(int userId) {
         try {
             return restTemplate.getForObject(
                     URL + "/" + userId,

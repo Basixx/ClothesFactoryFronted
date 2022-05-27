@@ -42,7 +42,7 @@ public class OrdersClient {
         }
     }
 
-    public List<Order> getOrderByUser(int userId) {
+    public List<Order> getOrdersByUser(int userId) {
         try {
             Order[] orderResponse = restTemplate.getForObject(
                     URL + "/byUser/" + userId,

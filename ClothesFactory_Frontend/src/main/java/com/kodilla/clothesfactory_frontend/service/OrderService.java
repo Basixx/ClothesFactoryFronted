@@ -22,7 +22,7 @@ public class OrderService {
     }
 
     public List<Order> getOrdersByUser(int userId) {
-        return ordersClient.getOrderByUser(userId);
+        return ordersClient.getOrdersByUser(userId);
     }
 
     public void createOrder(int userId, OrderShipment orderShipment) {

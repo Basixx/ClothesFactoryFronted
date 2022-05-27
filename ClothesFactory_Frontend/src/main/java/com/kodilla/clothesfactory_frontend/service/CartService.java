@@ -16,7 +16,7 @@ public class CartService {
     }
 
     public Cart getCartFromUser(int userId) {
-        return cartsClient.getCartFromUser(userId);
+        return cartsClient.getUserCart(userId);
     }
 
     public void addClothToCart(int cartId, int clothId) {
