@@ -19,8 +19,6 @@ public class CartForm extends VerticalLayout {
     private final OrderService orderService = OrderService.getInstance();
     private final ClothService clothService = ClothService.getInstance();
     private final Grid<Cloth> clothGrid = new Grid<>(Cloth.class);
-    private final Button addNewCloth = new Button("Add new cloth");
-    private final Button createOrder = new Button("Create Order");
     private final ComboBox<OrderShipment> shipmentComboBox = new ComboBox<>("Shipment");
     private BigDecimal totalPrice;
     private final Text price;
@@ -35,6 +33,7 @@ public class CartForm extends VerticalLayout {
 
         clothForm.setCloth(null);
         clothGrid.setColumns("fashion", "color", "print", "font", "printColor", "size", "quantity", "price");
+        Button addNewCloth = new Button("Add new cloth");
         addNewCloth.addClickListener(e -> {
             clothGrid.asSingleSelect().clear();
             clothForm.setCloth(new Cloth());
@@ -45,7 +44,7 @@ public class CartForm extends VerticalLayout {
         add(new Text("My Cart"));
         add(addNewCloth);
 
-        createOrder.addClickListener(e -> createOrder(userId, shipmentComboBox.getValue()));
+        Button createOrder = new Button("Create Order", e -> createOrder(userId, shipmentComboBox.getValue()));
 
         VerticalLayout clothLayout = new VerticalLayout(clothGrid, price);
         add(clothLayout);

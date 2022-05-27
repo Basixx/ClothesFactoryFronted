@@ -13,14 +13,11 @@ public class CurrencyForm extends VerticalLayout {
     private ExchangeRate exchangeRate;
     private BigDecimal currencyTotalPrice;
     private final Text price = new Text("");
-    private final Button euro = new Button("EUR");
-    private final Button dollar = new Button("USD");
-    private final Button pound = new Button("GBP");
 
     public CurrencyForm(CartForm cartForm) {
-        euro.addClickListener(event -> showEuro(cartForm.getTotalPrice()));
-        dollar.addClickListener(event -> showDollar(cartForm.getTotalPrice()));
-        pound.addClickListener(event -> showPound(cartForm.getTotalPrice()));
+        Button euro = new Button("EUR", event -> showEuro(cartForm.getTotalPrice()));
+        Button dollar = new Button("USD", event -> showDollar(cartForm.getTotalPrice()));
+        Button pound = new Button("GBP", event -> showPound(cartForm.getTotalPrice()));
         HorizontalLayout buttons = new HorizontalLayout(euro, dollar, pound);
         add(buttons, price);
     }

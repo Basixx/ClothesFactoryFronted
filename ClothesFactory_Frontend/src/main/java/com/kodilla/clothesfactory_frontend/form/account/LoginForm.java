@@ -14,12 +14,11 @@ import org.springframework.web.client.RestClientException;
 public class LoginForm extends FormLayout {
     private final TextField emailAddress = new TextField("Email Address");
     private final TextField password = new TextField("Password");
-
-    private final Button previousPage = new Button("Previous Page", event -> previous());
-    private final Button login = new Button("Login", event -> authenticateUser(emailAddress.getValue(),password.getValue()));
     private final UserService userService = UserService.getInstance();
 
     public LoginForm() {
+        Button previousPage = new Button("Previous Page", event -> previous());
+        Button login = new Button("Login", event -> authenticateUser(emailAddress.getValue(), password.getValue()));
         add(new VerticalLayout(new Text("LOGIN"), previousPage, emailAddress, password, login));
     }
 

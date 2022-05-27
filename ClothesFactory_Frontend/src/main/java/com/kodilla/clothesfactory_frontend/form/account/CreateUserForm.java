@@ -22,12 +22,11 @@ public class CreateUserForm extends VerticalLayout {
     private final TextField city = new TextField("City");
     private final TextField postCode = new TextField("Post code");
     private final UserService userService = UserService.getInstance();
-    private final Button previousPage = new Button("Previous Page", event -> previous());
 
     public CreateUserForm() {
-        Button createAccount = new Button("Create Account");
+        Button previousPage = new Button("Previous Page", event -> previous());
+        Button createAccount = new Button("Create Account", event -> saveUser());
         createAccount.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        createAccount.addClickListener(event -> saveUser());
 
         add(new VerticalLayout(new Text("Create an account"), previousPage,
                 name, surname, phoneNumber, emailAddress, password, street, streetAndApartmentNumber, city, postCode, createAccount));

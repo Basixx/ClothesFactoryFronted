@@ -21,16 +21,14 @@ public class UserForm extends VerticalLayout {
     private final TextField postCode = new TextField("Post code");
     private final UserService userService = UserService.getInstance();
     private final Binder<User> binder = new Binder<>(User.class);
-    private final Button updateAccount = new Button("Update Credentials");
-
-    private final Button deleteAccount = new Button("Delete Account", event -> delete());
 
     public UserForm(AccountSettingsForm accountSettingsForm, int id) {
         this.accountSettingsFormForm = accountSettingsForm;
         setUser(null);
+        Button updateAccount = new Button("Update Credentials", event -> save(id));
+        Button deleteAccount = new Button("Delete Account", event -> delete());
         add(name, surname, phoneNumber, password, street, streetAndApartmentNumber, city, postCode, updateAccount, deleteAccount);
         binder.bindInstanceFields(this);
-        updateAccount.addClickListener(event -> save(id));
     }
 
     private void save(int userId) {
