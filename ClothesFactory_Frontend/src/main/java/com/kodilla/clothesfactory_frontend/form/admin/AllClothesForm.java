@@ -8,13 +8,12 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class AllClothesForm extends VerticalLayout {
 
-    private final ClothService clothService = ClothService.getInstance();
-    private final Grid<Cloth> clothGrid = new Grid<>(Cloth.class);
-
     public AllClothesForm() {
+        Grid<Cloth> clothGrid = new Grid<>(Cloth.class);
         clothGrid.setColumns("fashion", "color", "print", "font", "printColor", "size", "quantity", "price");
         add(new Text("All Clothes:"));
         add(clothGrid);
+        ClothService clothService = ClothService.getInstance();
         clothGrid.setItems(clothService.getAllClothes());
     }
 }

@@ -8,13 +8,12 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class PaymentHistoryForm extends VerticalLayout {
 
-    private final PaymentHistoryService paymentHistoryService = PaymentHistoryService.getInstance();
-    private final Grid<PaymentHistory> paymentHistoryGrid = new Grid<>(PaymentHistory.class);
-
     public PaymentHistoryForm() {
+        Grid<PaymentHistory> paymentHistoryGrid = new Grid<>(PaymentHistory.class);
         paymentHistoryGrid.setColumns("paymentTime", "orderId", "userMail", "price");
         add(new Text("Payment History"));
         add(paymentHistoryGrid);
+        PaymentHistoryService paymentHistoryService = PaymentHistoryService.getInstance();
         paymentHistoryGrid.setItems(paymentHistoryService.getPaymentHistory());
     }
 }

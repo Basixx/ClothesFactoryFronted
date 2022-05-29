@@ -8,13 +8,12 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class ShipmentHistoryForm extends VerticalLayout {
 
-    private final ShipmentHistoryService shipmentHistoryService = ShipmentHistoryService.getInstance();
-    private final Grid<ShipmentHistory> shipmentHistoryGrid = new Grid<>(ShipmentHistory.class);
-
     public ShipmentHistoryForm() {
+        Grid<ShipmentHistory> shipmentHistoryGrid = new Grid<>(ShipmentHistory.class);
         shipmentHistoryGrid.setColumns("shipmentTime", "orderId", "userMail", "shippingCompany");
         add(new Text("Shipment History"));
         add(shipmentHistoryGrid);
+        ShipmentHistoryService shipmentHistoryService = ShipmentHistoryService.getInstance();
         shipmentHistoryGrid.setItems(shipmentHistoryService.getShipmentHistory());
     }
 }

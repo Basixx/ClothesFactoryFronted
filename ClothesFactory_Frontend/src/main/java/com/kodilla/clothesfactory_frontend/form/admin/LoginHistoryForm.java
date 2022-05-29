@@ -8,13 +8,12 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class LoginHistoryForm extends VerticalLayout {
 
-    private final LoginHistoryService loginHistoryService = LoginHistoryService.getInstance();
-    private final Grid<LoginHistory> loginHistoryGrid = new Grid<>(LoginHistory.class);
-
     public LoginHistoryForm() {
+        Grid<LoginHistory> loginHistoryGrid = new Grid<>(LoginHistory.class);
         loginHistoryGrid.setColumns("loginTime", "userMail", "succeed");
         add(new Text("Login History"));
         add(loginHistoryGrid);
+        LoginHistoryService loginHistoryService = LoginHistoryService.getInstance();
         loginHistoryGrid.setItems(loginHistoryService.getLoginHistory());
     }
 }

@@ -2,7 +2,6 @@ package com.kodilla.clothesfactory_frontend.service;
 
 import com.kodilla.clothesfactory_frontend.configuration.client.UsersClient;
 import com.kodilla.clothesfactory_frontend.domain.User;
-import org.springframework.web.client.RestClientException;
 import java.util.List;
 
 public class UserService {

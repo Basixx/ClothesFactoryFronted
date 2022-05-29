@@ -10,7 +10,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class AllUsersForm extends VerticalLayout {
 
-    private final UserService userService = UserService.getInstance();
     private final OrderService orderService = OrderService.getInstance();
     private final Grid<User> userGrid = new Grid<>(User.class);
     private final Grid<Order> orderGrid = new Grid<>(Order.class);
@@ -20,6 +19,7 @@ public class AllUsersForm extends VerticalLayout {
                 "street", "streetAndApartmentNumber", "city", "postCode");
         add(new Text("All Users:"));
         add(userGrid);
+        UserService userService = UserService.getInstance();
         userGrid.setItems(userService.getAllUsers());
 
         userGrid.asSingleSelect().addValueChangeListener(event -> {

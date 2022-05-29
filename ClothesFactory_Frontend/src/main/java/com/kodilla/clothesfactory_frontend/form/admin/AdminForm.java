@@ -12,7 +12,6 @@ import com.vaadin.flow.component.textfield.TextField;
 public class AdminForm extends VerticalLayout {
 
     private final AdminTokenService adminTokenService = AdminTokenService.getInstance();
-    private final Button submit = new Button("SUBMIT", e-> authenticateAdmin());
     private final Button clothes = new Button("Show All Clothes", e -> showClothes());
     private final Button orders = new Button("Show All Orders", e -> showOrders());
     private final Button users = new Button("Show All Users", e  -> showUsers());
@@ -20,13 +19,14 @@ public class AdminForm extends VerticalLayout {
     private final Button signInHistory = new Button("Show Sign In History", e -> showSignInHistory());
     private final Button paymentHistory = new Button("Show Payment History", e -> showPaymentHistory());
     private final Button shipmentHistory = new Button("Show Shipment History", e -> showShipmentHistory());
-    private final Button previousPage = new Button("Previous Page", e -> previous());
-    private final Button token = new Button("Generate Token", e -> generateToken());
     private final Button logOut = new Button("Log Out", e -> logout());
     private final TextField authentication = new TextField("AUTHENTICATION");
     private final HorizontalLayout toolbar = new HorizontalLayout(clothes, orders, users, loginHistory, signInHistory, paymentHistory, shipmentHistory, logOut);
     private final VerticalLayout view = new VerticalLayout(new Text("ADMIN"), toolbar);
     public AdminForm() {
+        Button submit = new Button("SUBMIT", e -> authenticateAdmin());
+        Button previousPage = new Button("Previous Page", e -> previous());
+        Button token = new Button("Generate Token", e -> generateToken());
         add(new VerticalLayout(new Text("ADMIN"), previousPage, token, authentication, submit));
     }
 
