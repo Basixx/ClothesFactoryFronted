@@ -47,6 +47,7 @@ public class AllOrdersForm extends VerticalLayout {
         try {
             orderService.setOrderToPaid(orderGrid.asSingleSelect().getValue().getId().intValue());
             clothGrid.setItems(new ArrayList<>());
+            Notification.show("Order has been paid!");
         } catch (RestClientException e) {
             Notification.show(e.getMessage());
             clothGrid.setItems(new ArrayList<>());
@@ -61,6 +62,7 @@ public class AllOrdersForm extends VerticalLayout {
         try {
             orderService.setOrderToSent(orderGrid.asSingleSelect().getValue().getId().intValue());
             clothGrid.setItems(new ArrayList<>());
+            Notification.show("Order has been sent!");
         } catch (RestClientException e) {
             Notification.show(e.getMessage());
             clothGrid.setItems(new ArrayList<>());

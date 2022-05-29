@@ -34,6 +34,7 @@ public class LoginForm extends FormLayout {
             try {
                 User existingUser = userService.authenticateUser(email, password);
                 showAccountForm(existingUser.getId().intValue());
+                Notification.show("You logged in successfully!");
             } catch (RestClientException e) {
                 Notification.show(e.getMessage());
             }

@@ -42,6 +42,7 @@ public class CreateUserForm extends VerticalLayout {
             try {
                 User createdUser = userService.createUser(user);
                 showAccountForm(createdUser.getId().intValue());
+                Notification.show("User account has been created!");
             } catch (RestClientException e) {
                 Notification.show(e.getMessage());
             }

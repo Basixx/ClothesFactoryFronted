@@ -69,6 +69,7 @@ public class CartForm extends VerticalLayout {
             try {
                 orderService.createOrder(userID, orderShipment);
                 shipmentComboBox.getGenericDataView();
+                Notification.show("Order has been created!");
             } catch (RestClientException e) {
                 Notification.show(e.getMessage());
             } finally {

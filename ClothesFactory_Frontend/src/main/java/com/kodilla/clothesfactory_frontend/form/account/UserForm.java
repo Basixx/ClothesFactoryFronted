@@ -41,6 +41,7 @@ public class UserForm extends VerticalLayout {
             userService.updateUser(userId, user);
             accountSettingsFormForm.refreshUser(userId);
             setUser(null);
+            Notification.show("Credentials have been saved!");
         }
     }
 

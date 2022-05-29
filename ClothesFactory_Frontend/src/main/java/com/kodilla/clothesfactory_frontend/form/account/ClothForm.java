@@ -79,6 +79,7 @@ public class ClothForm extends FormLayout {
                 cartService.addClothToCart(usersCartId, createdCloth.getId().intValue());
                 cartForm.refreshClothes(userId);
                 setCloth(null);
+                Notification.show("Cloth has been added to cart!");
             } catch (RestClientException e) {
                 Notification.show(e.getMessage());
             }
