@@ -51,7 +51,7 @@ public class CreateUserForm extends VerticalLayout {
 
     private void showAccountForm(int userId) {
         removeAll();
-        add(new AccountForm(userId));
+        add(new UserForm(userId));
     }
 
     private void previous(){

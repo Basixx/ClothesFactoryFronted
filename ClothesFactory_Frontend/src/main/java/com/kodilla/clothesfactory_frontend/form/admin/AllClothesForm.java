@@ -15,5 +15,6 @@ public class AllClothesForm extends VerticalLayout {
         add(clothGrid);
         ClothService clothService = ClothService.getInstance();
         clothGrid.setItems(clothService.getAllClothes());
+        clothGrid.getColumns().forEach(column -> column.setAutoWidth(true));
     }
 }

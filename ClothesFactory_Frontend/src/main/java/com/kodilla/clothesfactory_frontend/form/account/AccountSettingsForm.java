@@ -11,12 +11,13 @@ public class AccountSettingsForm extends VerticalLayout {
     private final Grid<User> userGrid = new Grid<>(User.class);
 
     public AccountSettingsForm(int userId) {
-        UserForm userForm = new UserForm(this, userId);
+        AccountForm accountForm = new AccountForm(this, userId);
         userGrid.setColumns("name", "surname", "phoneNumber", "emailAddress", "password",
                 "street", "streetAndApartmentNumber", "city", "postCode");
+        userGrid.getColumns().forEach(column -> column.setAutoWidth(true));
         refreshUser(userId);
-        add(new Text("Account Settings"), userGrid, userForm);
-        userGrid.asSingleSelect().addValueChangeListener(event -> userForm.setUser(userGrid.asSingleSelect().getValue()));
+        add(new Text("Account Settings"), userGrid, accountForm);
+        userGrid.asSingleSelect().addValueChangeListener(event -> accountForm.setUser(userGrid.asSingleSelect().getValue()));
     }
 
     public void refreshUser(int userID) {

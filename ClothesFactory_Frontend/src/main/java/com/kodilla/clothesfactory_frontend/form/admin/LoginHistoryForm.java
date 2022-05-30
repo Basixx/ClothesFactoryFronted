@@ -11,6 +11,7 @@ public class LoginHistoryForm extends VerticalLayout {
     public LoginHistoryForm() {
         Grid<LoginHistory> loginHistoryGrid = new Grid<>(LoginHistory.class);
         loginHistoryGrid.setColumns("loginTime", "userMail", "succeed");
+        loginHistoryGrid.getColumns().forEach(column -> column.setAutoWidth(true));
         add(new Text("Login History"));
         add(loginHistoryGrid);
         LoginHistoryService loginHistoryService = LoginHistoryService.getInstance();

@@ -11,6 +11,7 @@ public class SignInHistoryForm extends VerticalLayout {
     public SignInHistoryForm() {
         Grid<SignInHistory> signInHistoryGrid = new Grid<>(SignInHistory.class);
         signInHistoryGrid.setColumns("signInTime", "userMail", "userNumber");
+        signInHistoryGrid.getColumns().forEach(column -> column.setAutoWidth(true));
         add(new Text("Sign In History"));
         add(signInHistoryGrid);
         SignInHistoryService signInHistoryService = SignInHistoryService.getInstance();

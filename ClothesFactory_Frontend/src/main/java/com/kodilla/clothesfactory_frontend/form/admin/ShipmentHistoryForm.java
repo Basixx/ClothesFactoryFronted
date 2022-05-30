@@ -11,6 +11,7 @@ public class ShipmentHistoryForm extends VerticalLayout {
     public ShipmentHistoryForm() {
         Grid<ShipmentHistory> shipmentHistoryGrid = new Grid<>(ShipmentHistory.class);
         shipmentHistoryGrid.setColumns("shipmentTime", "orderId", "userMail", "shippingCompany");
+        shipmentHistoryGrid.getColumns().forEach(column -> column.setAutoWidth(true));
         add(new Text("Shipment History"));
         add(shipmentHistoryGrid);
         ShipmentHistoryService shipmentHistoryService = ShipmentHistoryService.getInstance();

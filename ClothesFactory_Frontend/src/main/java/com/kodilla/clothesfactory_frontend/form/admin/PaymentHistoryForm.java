@@ -11,6 +11,7 @@ public class PaymentHistoryForm extends VerticalLayout {
     public PaymentHistoryForm() {
         Grid<PaymentHistory> paymentHistoryGrid = new Grid<>(PaymentHistory.class);
         paymentHistoryGrid.setColumns("paymentTime", "orderId", "userMail", "price");
+        paymentHistoryGrid.getColumns().forEach(column -> column.setAutoWidth(true));
         add(new Text("Payment History"));
         add(paymentHistoryGrid);
         PaymentHistoryService paymentHistoryService = PaymentHistoryService.getInstance();

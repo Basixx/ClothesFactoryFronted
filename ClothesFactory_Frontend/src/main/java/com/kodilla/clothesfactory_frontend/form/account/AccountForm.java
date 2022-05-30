@@ -1,47 +1,58 @@
 package com.kodilla.clothesfactory_frontend.form.account;
 
-import com.vaadin.flow.component.Text;
+import com.kodilla.clothesfactory_frontend.domain.User;
+import com.kodilla.clothesfactory_frontend.service.UserService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.component.notification.Notification;
 
 public class AccountForm extends VerticalLayout {
-    private final int userId;
-    private final Button createNewOrder = new Button("Create New Order",  event -> showCart());
-    private final Button myOrders = new Button("My Orders", event -> showOrders());
-    private final Button accountSettings = new Button("Account Settings", event -> showAccountSettings());
-    private final Button logOut = new Button("Log Out", event -> logout());
-    HorizontalLayout toolbar = new HorizontalLayout(createNewOrder, myOrders, accountSettings, logOut);
-    VerticalLayout view = new VerticalLayout(new Text("ACCOUNT"), toolbar);
+    private final AccountSettingsForm accountSettingsFormForm;
+    private final TextField name = new TextField("Name");
+    private final TextField surname = new TextField("Surname");
+    private final TextField phoneNumber = new TextField("Phone Number");
+    private final TextField password = new TextField("Password");
+    private final TextField street = new TextField("Street");
+    private final TextField streetAndApartmentNumber = new TextField("Street and apartment number");
+    private final TextField city = new TextField("City");
+    private final TextField postCode = new TextField("Post code");
+    private final UserService userService = UserService.getInstance();
+    private final Binder<User> binder = new Binder<>(User.class);
 
-    public AccountForm(int userId) {
-        this.userId = userId;
-        add(view);
+    public AccountForm(AccountSettingsForm accountSettingsForm, int id) {
+        this.accountSettingsFormForm = accountSettingsForm;
+        setUser(null);
+        Button updateAccount = new Button("Update Credentials", event -> save(id));
+        Button deleteAccount = new Button("Delete Account", event -> delete());
+        add(name, surname, phoneNumber, password, street, streetAndApartmentNumber, city, postCode, updateAccount, deleteAccount);
+        binder.bindInstanceFields(this);
     }
 
-    private void showAccountView() {
-        removeAll();
-        add(view);
+    private void save(int userId) {
+        if(name.getValue().equals("") || surname.getValue().equals("") || phoneNumber.getValue().equals("") ||
+                password.getValue().equals("") || street.getValue().equals("") ||
+                streetAndApartmentNumber.getValue().equals("") || city.getValue().equals("") || postCode.getValue().equals("")) {
+            Notification.show("Please provide all the data to update user credentials.");
+        } else {
+            User user = binder.getBean();
+            userService.updateUser(userId, user);
+            accountSettingsFormForm.refreshUser(userId);
+            setUser(null);
+            Notification.show("Credentials have been saved!");
+        }
     }
 
-    private void showCart() {
-        showAccountView();
-        add(new CartForm(userId));
-    }
-
-    private void showOrders() {
-        showAccountView();
-        add(new OrdersForm(userId));
-    }
-
-    private void showAccountSettings() {
-        showAccountView();
-        add(new AccountSettingsForm(userId));
-        setSizeFull();
-    }
-
-    private void logout(){
+    private void delete() {
+        User user = binder.getBean();
+        userService.deleteUser(user.getId().intValue());
+        setUser(null);
         UI.getCurrent().getPage().reload();
+    }
+    public void setUser(User user) {
+        binder.setBean(user);
+        setVisible(user != null);
     }
 }

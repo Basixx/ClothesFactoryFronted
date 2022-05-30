@@ -17,6 +17,7 @@ public class AllUsersForm extends VerticalLayout {
     public AllUsersForm() {
         userGrid.setColumns("name", "surname", "phoneNumber", "emailAddress", "password",
                 "street", "streetAndApartmentNumber", "city", "postCode");
+        userGrid.getColumns().forEach(column -> column.setAutoWidth(true));
         add(new Text("All Users:"));
         add(userGrid);
         UserService userService = UserService.getInstance();
@@ -28,6 +29,7 @@ public class AllUsersForm extends VerticalLayout {
             }
             int userId = userGrid.asSingleSelect().getValue().getId().intValue();
             orderGrid.setColumns("id", "orderDate", "totalOrderPrice", "shipmentCompanyName", "shippingPrice", "deliveryDays");
+            orderGrid.getColumns().forEach(column -> column.setAutoWidth(true));
             orderGrid.setItems(orderService.getOrdersByUser(userId));
             add(orderGrid);
         });

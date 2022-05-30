@@ -33,6 +33,7 @@ public class CartForm extends VerticalLayout {
 
         clothForm.setCloth(null);
         clothGrid.setColumns("fashion", "color", "print", "font", "printColor", "size", "quantity", "price");
+        clothGrid.getColumns().forEach(column -> column.setAutoWidth(true));
         Button addNewCloth = new Button("Add new cloth");
         addNewCloth.addClickListener(e -> {
             clothGrid.asSingleSelect().clear();

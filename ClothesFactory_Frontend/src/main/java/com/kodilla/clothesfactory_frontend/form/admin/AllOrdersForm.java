@@ -24,6 +24,7 @@ public class AllOrdersForm extends VerticalLayout {
 
     public AllOrdersForm() {
         orderGrid.setColumns("id", "orderDate", "userMail", "totalOrderPrice", "paid", "sent", "shipmentCompanyName", "shippingPrice", "deliveryDays", "address");
+        orderGrid.getColumns().forEach(column -> column.setAutoWidth(true));
         add(new Text("All Orders:"));
         add(orderGrid);
         refreshAllOrders();
@@ -34,6 +35,7 @@ public class AllOrdersForm extends VerticalLayout {
             }
             int orderId = orderGrid.asSingleSelect().getValue().getId().intValue();
             clothGrid.setItems(clothService.getClothesFromOrder(orderId));
+            clothGrid.getColumns().forEach(column -> column.setAutoWidth(true));
             add(clothGrid);
             add(new HorizontalLayout(setToPaid, setToSent));
         });
