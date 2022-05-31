@@ -14,7 +14,6 @@ public class AccountSettingsForm extends VerticalLayout {
         AccountForm accountForm = new AccountForm(this, userId);
         userGrid.setColumns("name", "surname", "phoneNumber", "emailAddress", "password",
                 "street", "streetAndApartmentNumber", "city", "postCode");
-        userGrid.getColumns().forEach(column -> column.setAutoWidth(true));
         refreshUser(userId);
         add(new Text("Account Settings"), userGrid, accountForm);
         userGrid.asSingleSelect().addValueChangeListener(event -> accountForm.setUser(userGrid.asSingleSelect().getValue()));
@@ -22,5 +21,6 @@ public class AccountSettingsForm extends VerticalLayout {
 
     public void refreshUser(int userID) {
         userGrid.setItems(userService.getUser(userID));
+        userGrid.getColumns().forEach(column -> column.setAutoWidth(true));
     }
 }

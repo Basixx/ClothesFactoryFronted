@@ -24,7 +24,6 @@ public class AllOrdersForm extends VerticalLayout {
 
     public AllOrdersForm() {
         orderGrid.setColumns("id", "orderDate", "userMail", "totalOrderPrice", "paid", "sent", "shipmentCompanyName", "shippingPrice", "deliveryDays", "address");
-        orderGrid.getColumns().forEach(column -> column.setAutoWidth(true));
         add(new Text("All Orders:"));
         add(orderGrid);
         refreshAllOrders();
@@ -43,6 +42,7 @@ public class AllOrdersForm extends VerticalLayout {
 
     private void refreshAllOrders() {
         orderGrid.setItems(orderService.getAllOrders());
+        orderGrid.getColumns().forEach(column -> column.setAutoWidth(true));
     }
 
     private void setOrderToPaid() {

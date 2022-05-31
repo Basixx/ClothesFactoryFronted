@@ -33,7 +33,6 @@ public class CartForm extends VerticalLayout {
 
         clothForm.setCloth(null);
         clothGrid.setColumns("fashion", "color", "print", "font", "printColor", "size", "quantity", "price");
-        clothGrid.getColumns().forEach(column -> column.setAutoWidth(true));
         Button addNewCloth = new Button("Add new cloth");
         addNewCloth.addClickListener(e -> {
             clothGrid.asSingleSelect().clear();
@@ -81,6 +80,7 @@ public class CartForm extends VerticalLayout {
 
     public void refreshClothes(int userID) {
         clothGrid.setItems(clothService.getClothesFromUserCart(userID));
+        clothGrid.getColumns().forEach(column -> column.setAutoWidth(true));
         totalPrice = cartService.getCartFromUser(userID).getTotalPrice();
         price.setText("Total price: " + totalPrice + " PLN");
         currencyForm.clearCurrency();
