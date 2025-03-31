@@ -16,7 +16,7 @@ public class ExchangeRateClient {
     private static ExchangeRateClient exchangeRateClient;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeRateClient.class);
-    private final static String URL = "http://localhost:8080/v1/exchange";
+    private final static String URL = "http://localhost:8080/exchange";
 
     public static ExchangeRateClient getInstance() {
         if(exchangeRateClient == null) {
