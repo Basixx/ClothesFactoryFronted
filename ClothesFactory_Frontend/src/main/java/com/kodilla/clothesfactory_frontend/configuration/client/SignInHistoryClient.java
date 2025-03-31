@@ -18,7 +18,7 @@ public class SignInHistoryClient {
     private final RestTemplate restTemplate;
     private static SignInHistoryClient signInHistoryClient;
     private static final Logger LOGGER = LoggerFactory.getLogger(SignInHistoryClient.class);
-    private final static String URL = "http://localhost:8080/v1/signInHistory";
+    private final static String URL = "http://localhost:8080/signInHistory";
 
     public static SignInHistoryClient getInstance() {
         if(signInHistoryClient == null) {

@@ -17,7 +17,7 @@ public class OrdersClient {
     private final RestTemplate restTemplate;
     private static OrdersClient ordersClient;
     private static final Logger LOGGER = LoggerFactory.getLogger(OrdersClient.class);
-    private final static String URL = "http://localhost:8080/v1/orders";
+    private final static String URL = "http://localhost:8080";
 
     public static OrdersClient getInstance() {
         if (ordersClient == null) {
@@ -29,7 +29,7 @@ public class OrdersClient {
     public List<Order> getAllOrders() {
         try {
             Order[] ordersResponse = restTemplate.getForObject(
-                    URL,
+                    URL + "/orders",
                     Order[].class
             );
             return Optional.ofNullable(ordersResponse)
@@ -45,7 +45,7 @@ public class OrdersClient {
     public List<Order> getOrdersByUser(int userId) {
         try {
             Order[] orderResponse = restTemplate.getForObject(
-                    URL + "/byUser/" + userId,
+                    URL + "/users/" + userId + "/orders",
                     Order[].class
             );
             return Optional.ofNullable(orderResponse)
@@ -58,13 +58,17 @@ public class OrdersClient {
     }
 
     public void createOrder(int userId, OrderShipment orderShipment) {
-        restTemplate.postForObject(URL + "/" + userId + "/" + orderShipment, userId, Order.class);
+        restTemplate.postForObject(
+                URL + "/users/" + userId + "/order/" + orderShipment,
+                userId,
+                Order.class
+        );
     }
 
     public void setOrderToPaid(int orderId) {
         try{
             restTemplate.put(
-                    URL + "/paid/" + orderId,
+                    URL + "/orders/" + orderId + "/paid",
                     Order.class
             );
         } catch (RestClientException e) {
@@ -76,7 +80,7 @@ public class OrdersClient {
     public void setOrderToSent(int orderId) {
         try {
             restTemplate.put(
-                    URL + "/sent/" + orderId,
+                    URL + "/orders/" + orderId + "/sent",
                     Order.class
             );
         } catch (RestClientException e) {

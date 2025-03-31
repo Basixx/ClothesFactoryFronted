@@ -17,7 +17,7 @@ public class PaymentHistoryClient {
     private final RestTemplate restTemplate;
     private static PaymentHistoryClient paymentHistoryClient;
     private static final Logger LOGGER = LoggerFactory.getLogger(PaymentHistoryClient.class);
-    private final static String URL = "http://localhost:8080/v1/paymentHistory";
+    private final static String URL = "http://localhost:8080/paymentHistory";
 
     public static PaymentHistoryClient getInstance() {
         if(paymentHistoryClient == null) {

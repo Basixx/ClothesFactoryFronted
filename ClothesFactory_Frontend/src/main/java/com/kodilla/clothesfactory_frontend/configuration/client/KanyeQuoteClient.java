@@ -13,7 +13,7 @@ public class KanyeQuoteClient {
     private final RestTemplate restTemplate;
     private static KanyeQuoteClient kanyeQuoteClient;
     private static final Logger LOGGER = LoggerFactory.getLogger(KanyeQuoteClient.class);
-    private final static String URL = "http://localhost:8080/v1/kanye";
+    private final static String URL = "http://localhost:8080/quote";
 
     public static KanyeQuoteClient getInstance() {
         if(kanyeQuoteClient == null) {

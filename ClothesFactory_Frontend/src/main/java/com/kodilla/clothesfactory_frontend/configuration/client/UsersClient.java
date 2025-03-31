@@ -17,7 +17,7 @@ public class UsersClient {
     private final RestTemplate restTemplate;
     private static UsersClient usersClient;
     private static final Logger LOGGER = LoggerFactory.getLogger(UsersClient.class);
-    private final static String URL = "http://localhost:8080/v1/users";
+    private final static String URL = "http://localhost:8080/users";
 
     public static UsersClient getInstance() {
         if (usersClient == null) {

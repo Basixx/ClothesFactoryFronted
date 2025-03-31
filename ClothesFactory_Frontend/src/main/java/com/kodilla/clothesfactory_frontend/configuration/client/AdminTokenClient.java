@@ -13,7 +13,7 @@ public class AdminTokenClient {
     private static AdminTokenClient adminTokenClient;
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminTokenClient.class);
 
-    private static final String URL = "http://localhost:8080/v1/token";
+    private static final String URL = "http://localhost:8080/tokens";
 
     public static AdminTokenClient getInstance() {
         if (adminTokenClient == null) {
